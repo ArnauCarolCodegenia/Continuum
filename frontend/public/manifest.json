@@ -1,13 +1,14 @@
 {
-  "name": "AnythingLLM",
-  "short_name": "AnythingLLM",
+  "name": "LLM Assistant",
+  "short_name": "LLM Assistant",
   "display": "standalone",
   "orientation": "portrait",
   "start_url": "/",
   "icons": [
     {
-      "src": "/favicon.png",
-      "sizes": "any"
+      "src": "/logo.jpg",
+      "sizes": "any",
+      "type": "image/jpeg"
     }
   ]
 }

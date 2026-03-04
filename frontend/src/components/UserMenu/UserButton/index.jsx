@@ -24,7 +24,7 @@ export default function UserButton() {
   const buttonRef = useRef();
   const [showMenu, setShowMenu] = useState(false);
   const [showAccountSettings, setShowAccountSettings] = useState(false);
-  const [supportEmail, setSupportEmail] = useState("");
+
 
   const handleClose = (event) => {
     if (
@@ -48,17 +48,7 @@ export default function UserButton() {
     return () => document.removeEventListener("mousedown", handleClose);
   }, [showMenu]);
 
-  useEffect(() => {
-    const fetchSupportEmail = async () => {
-      const supportEmail = await System.fetchSupportEmail();
-      setSupportEmail(
-        supportEmail?.email
-          ? `mailto:${supportEmail.email}`
-          : paths.mailToMintplex()
-      );
-    };
-    fetchSupportEmail();
-  }, []);
+
 
   if (mode === null) return null;
   return (
@@ -86,12 +76,7 @@ export default function UserButton() {
                 {t("profile_settings.account")}
               </button>
             )}
-            <a
-              href={supportEmail}
-              className="text-white hover:bg-theme-action-menu-item-hover w-full text-left px-4 py-1.5 rounded-md"
-            >
-              {t("profile_settings.support")}
-            </a>
+
             <button
               onClick={() => {
                 window.localStorage.removeItem(AUTH_USER);

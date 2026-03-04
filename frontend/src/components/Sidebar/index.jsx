@@ -42,7 +42,7 @@ export default function Sidebar() {
               <img
                 src={logo}
                 alt="Logo"
-                className={`rounded max-h-[24px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
+                className={`rounded max-h-[40px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
               />
             </Link>
             {canToggleSidebar && (
@@ -55,7 +55,7 @@ export default function Sidebar() {
         </div>
         <div
           ref={sidebarRef}
-          className="relative m-[16px] rounded-[16px] bg-theme-bg-sidebar border-[2px] border-theme-sidebar-border light:border-none min-w-[250px] p-[10px] h-[calc(100%-76px)]"
+          className="relative m-[16px] rounded-[20px] bg-theme-bg-sidebar border-[1.5px] border-[#d4d9e4] light:border-none min-w-[250px] p-[10px] h-[calc(100%-76px)] shadow-[0_1px_8px_rgba(0,0,0,0.04)]"
         >
           <div className="flex flex-col h-full overflow-x-hidden">
             <div className="flex-grow flex flex-col min-w-[235px]">
@@ -65,7 +65,7 @@ export default function Sidebar() {
                   <ActiveWorkspaces />
                 </div>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 pt-4 pb-3 rounded-b-[16px] bg-theme-bg-sidebar bg-opacity-80 backdrop-filter backdrop-blur-md z-1">
+              <div className="absolute bottom-0 left-0 right-0 pt-4 pb-3 rounded-b-[18px] bg-theme-bg-sidebar bg-opacity-90 backdrop-filter backdrop-blur-md z-1 border-t border-[#d4d9e4]/40">
                 <Footer />
               </div>
             </div>

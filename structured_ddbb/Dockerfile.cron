@@ -1,0 +1,29 @@
+# ============================================================
+#  Dockerfile.cron  –  Alpine cron container that runs
+#  import.sh every 5 minutes
+# ============================================================
+FROM alpine:3.19
+
+# Install PostgreSQL client + MySQL client
+RUN apk add --no-cache \
+    postgresql16-client \
+    mysql-client \
+    bash \
+    tzdata
+
+# Set timezone (optional)
+ENV TZ=Europe/Madrid
+
+# Copy import script
+COPY import.sh /import.sh
+RUN chmod +x /import.sh
+
+# Set up crontab: run every 5 minutes, log to /var/log/import.log
+RUN echo "*/5 * * * * /bin/sh /import.sh >> /var/log/import.log 2>&1" \
+    > /etc/crontabs/root
+
+# Create log file
+RUN touch /var/log/import.log
+
+# Run crond in foreground and tail the log so docker logs shows output
+CMD sh -c "crond -f -l 2 & tail -f /var/log/import.log"

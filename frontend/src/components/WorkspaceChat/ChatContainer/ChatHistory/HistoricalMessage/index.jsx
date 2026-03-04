@@ -87,7 +87,11 @@ const HistoricalMessage = ({
         isDeleted ? "animate-remove" : ""
       } flex justify-center items-end w-full group bg-theme-bg-chat`}
     >
-      <div className="py-8 px-4 w-full flex gap-x-5 md:max-w-[80%] flex-col">
+      <div className={`py-5 px-4 w-full flex gap-x-5 md:max-w-[80%] flex-col ${
+        role === "user"
+          ? "bg-[#f0f2f8] rounded-2xl mx-4 md:mx-auto my-1 shadow-[0_1px_4px_rgba(0,0,0,0.04)]"
+          : "my-1"
+      }`}>
         <div className={`flex gap-x-5 ${alignmentCls}`}>
           <div className="flex flex-col items-center">
             <ProfileImage role={role} workspace={workspace} />
@@ -161,7 +165,7 @@ const HistoricalMessage = ({
 function ProfileImage({ role, workspace }) {
   if (role === "assistant" && workspace.pfpUrl) {
     return (
-      <div className="relative w-[35px] h-[35px] rounded-full flex-shrink-0 overflow-hidden">
+      <div className="relative w-[35px] h-[35px] rounded-full flex-shrink-0 overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.08)]">
         <img
           src={workspace.pfpUrl}
           alt="Workspace profile picture"

@@ -9,7 +9,7 @@ import Workspace from "@/models/workspace";
 import handleChat, { ABORT_STREAM_EVENT } from "@/utils/chat";
 import { isMobile } from "react-device-detect";
 import { SidebarMobileHeader } from "../../Sidebar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { v4 } from "uuid";
 import handleSocketResponse, {
   websocketURI,
@@ -22,9 +22,12 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import { ChatTooltips } from "./ChatTooltips";
 import { MetricsProvider } from "./ChatHistory/HistoricalMessage/Actions/RenderMetrics";
+import { ArrowLeft } from "@phosphor-icons/react";
+import paths from "@/utils/paths";
 
 export default function ChatContainer({ workspace, knownHistory = [] }) {
   const { threadSlug = null } = useParams();
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [chatHistory, setChatHistory] = useState(knownHistory);
@@ -302,8 +305,18 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
   return (
     <div
       style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-      className="transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll no-scroll z-[2]"
+      className="transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[20px] bg-theme-bg-secondary md:shadow-[0_2px_24px_rgba(0,0,0,0.06)] md:border md:border-[#e0e4ed] w-full h-full overflow-y-scroll no-scroll z-[2]"
     >
+      {!isMobile && (
+        <button
+          type="button"
+          onClick={() => navigate(paths.home())}
+          className="hidden md:flex items-center gap-x-2 absolute top-4 right-4 z-10 px-3 py-2 rounded-full bg-theme-bg-sidebar border border-white/10 text-theme-text-primary hover:bg-theme-action-menu-bg transition-colors duration-300"
+        >
+          <ArrowLeft className="w-4 h-4" weight="bold" />
+          <span className="text-sm font-medium">Volver al inicio</span>
+        </button>
+      )}
       {isMobile && <SidebarMobileHeader />}
       <DnDFileUploaderWrapper>
         <MetricsProvider>

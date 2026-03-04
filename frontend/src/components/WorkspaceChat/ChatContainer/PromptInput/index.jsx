@@ -269,7 +269,7 @@ export default function PromptInput({
         className="flex flex-col gap-y-1 rounded-t-lg md:w-3/4 w-full mx-auto max-w-xl items-center"
       >
         <div className="flex items-center rounded-lg md:mb-4 md:w-full">
-          <div className="w-[95vw] md:w-[635px] bg-theme-bg-chat-input light:bg-white light:border-solid light:border-[1px] light:border-theme-chat-input-border shadow-sm rounded-2xl pwa:rounded-3xl flex flex-col px-2 overflow-hidden">
+          <div className="w-[95vw] md:w-[635px] bg-theme-bg-chat-input light:bg-white border border-[#d4d9e4] shadow-[0_2px_12px_rgba(0,0,0,0.06)] rounded-3xl pwa:rounded-3xl flex flex-col px-2 overflow-hidden">
             <AttachmentManager attachments={attachments} />
             <div className="flex items-center border-b border-theme-chat-input-border mx-3">
               <textarea
@@ -300,7 +300,7 @@ export default function PromptInput({
                     ref={formRef}
                     type="submit"
                     disabled={isDisabled}
-                    className="border-none inline-flex justify-center rounded-2xl cursor-pointer opacity-60 hover:opacity-100 light:opacity-100 light:hover:opacity-60 ml-4 disabled:cursor-not-allowed group"
+                    className="border-none inline-flex justify-center items-center rounded-full cursor-pointer w-[32px] h-[32px] ml-3 bg-[#4f63d2] hover:bg-[#3f51b8] disabled:bg-[#c5cbe0] disabled:cursor-not-allowed transition-all duration-200 shadow-sm group"
                     data-tooltip-id="send-prompt"
                     data-tooltip-content={
                       isDisabled
@@ -310,8 +310,7 @@ export default function PromptInput({
                     aria-label={t("chat_window.send")}
                   >
                     <PaperPlaneRight
-                      color="var(--theme-sidebar-footer-icon-fill)"
-                      className="w-[22px] h-[22px] pointer-events-none text-theme-text-primary group-disabled:opacity-[25%]"
+                      className="w-[16px] h-[16px] pointer-events-none text-white group-disabled:opacity-50"
                       weight="fill"
                     />
                     <span className="sr-only">Send message</span>

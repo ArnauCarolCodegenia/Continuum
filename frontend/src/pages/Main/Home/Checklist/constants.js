@@ -154,15 +154,4 @@ export const CHECKLIST_ITEMS = () => [
     },
     icon: SlashCommandIcon,
   },
-  {
-    id: "visit_community",
-    title: t("main-page.checklist.tasks.visit_community.title"),
-    description: t("main-page.checklist.tasks.visit_community.description"),
-    action: t("main-page.checklist.tasks.visit_community.action"),
-    handler: () => {
-      window.open(paths.communityHub.website(), "_blank");
-      return true;
-    },
-    icon: UsersThree,
-  },
 ];

@@ -1,8 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import AnythingLLM from "./media/logo/anything-llm.png";
-import AnythingLLMDark from "./media/logo/anything-llm-dark.png";
-import DefaultLoginLogoLight from "./media/illustrations/login-logo.svg";
-import DefaultLoginLogoDark from "./media/illustrations/login-logo-light.svg";
+import CustomLogo from "./media/logo/logo.jpg";
 import System from "./models/system";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";
@@ -12,30 +9,22 @@ export function LogoProvider({ children }) {
   const [logo, setLogo] = useState("");
   const [loginLogo, setLoginLogo] = useState("");
   const [isCustomLogo, setIsCustomLogo] = useState(false);
-  const DefaultLoginLogo =
-    localStorage.getItem("theme") !== "default"
-      ? DefaultLoginLogoDark
-      : DefaultLoginLogoLight;
 
   async function fetchInstanceLogo() {
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();
-      if (logoURL) {
+      if (logoURL && isCustomLogo) {
         setLogo(logoURL);
-        setLoginLogo(isCustomLogo ? logoURL : DefaultLoginLogo);
-        setIsCustomLogo(isCustomLogo);
+        setLoginLogo(logoURL);
+        setIsCustomLogo(true);
       } else {
-        localStorage.getItem("theme") !== "default"
-          ? setLogo(AnythingLLMDark)
-          : setLogo(AnythingLLM);
-        setLoginLogo(DefaultLoginLogo);
+        setLogo(CustomLogo);
+        setLoginLogo(CustomLogo);
         setIsCustomLogo(false);
       }
     } catch (err) {
-      localStorage.getItem("theme") !== "default"
-        ? setLogo(AnythingLLMDark)
-        : setLogo(AnythingLLM);
-      setLoginLogo(DefaultLoginLogo);
+      setLogo(CustomLogo);
+      setLoginLogo(CustomLogo);
       setIsCustomLogo(false);
       console.error("Failed to fetch logo:", err);
     }

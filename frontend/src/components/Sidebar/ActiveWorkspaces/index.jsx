@@ -111,10 +111,10 @@ export default function ActiveWorkspaces() {
                           aria-current={isActive ? "page" : ""}
                           className={`
                             transition-all duration-[200ms]
-                            flex flex-grow w-[75%] gap-x-2 py-[6px] pl-[4px] pr-[6px] rounded-[4px] text-white justify-start items-center
+                            flex flex-grow w-[75%] gap-x-2 py-[8px] pl-[8px] pr-[8px] rounded-lg text-white justify-start items-center
                             bg-theme-sidebar-item-default
                             hover:bg-theme-sidebar-subitem-hover hover:font-bold
-                            ${isActive ? "bg-theme-sidebar-item-selected font-bold light:outline-2 light:outline light:outline-blue-400 light:outline-offset-[-2px]" : ""}
+                            ${isActive ? "bg-theme-sidebar-item-selected font-bold shadow-[0_1px_4px_rgba(0,0,0,0.06)] light:outline-2 light:outline light:outline-blue-400 light:outline-offset-[-2px]" : ""}
                           `}
                         >
                           <div className="flex flex-row justify-between w-full items-center">
@@ -152,7 +152,7 @@ export default function ActiveWorkspaces() {
                                     setSelectedWs(workspace);
                                     showModal();
                                   }}
-                                  className="border-none rounded-md flex items-center justify-center ml-auto p-[2px] hover:bg-[#646768] text-[#A7A8A9] hover:text-white"
+                                  className="border-none rounded-lg flex items-center justify-center ml-auto p-[3px] hover:bg-[#646768] text-[#A7A8A9] hover:text-white transition-colors duration-150"
                                 >
                                   <UploadSimple className="h-[20px] w-[20px]" />
                                 </button>
@@ -168,7 +168,7 @@ export default function ActiveWorkspaces() {
                                           )
                                     );
                                   }}
-                                  className="rounded-md flex items-center justify-center text-[#A7A8A9] hover:text-white ml-auto p-[2px] hover:bg-[#646768]"
+                                  className="rounded-lg flex items-center justify-center text-[#A7A8A9] hover:text-white ml-auto p-[3px] hover:bg-[#646768] transition-colors duration-150"
                                   aria-label="General appearance settings"
                                 >
                                   <GearSix

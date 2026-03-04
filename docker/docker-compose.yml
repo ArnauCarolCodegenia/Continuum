@@ -3,8 +3,23 @@ name: anythingllm
 networks:
   anything-llm:
     driver: bridge
+  shared-net:
+    external: true
 
 services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    networks:
+      - anything-llm
+      - shared-net
+    restart: unless-stopped
+
   anything-llm:
     container_name: anythingllm
     build:
@@ -15,6 +30,8 @@ services:
         ARG_GID: ${GID:-1000}
     cap_add:
       - SYS_ADMIN
+    depends_on:
+      - qdrant
     volumes:
       - "./.env:/app/server/.env"
       - "../server/storage:/app/server/storage"
@@ -27,5 +44,11 @@ services:
       - .env
     networks:
       - anything-llm
+      - shared-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+volumes:
+  qdrant_storage:
+    driver: local
