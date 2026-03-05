@@ -8,6 +8,7 @@ import { PaperPlaneRight } from "@phosphor-icons/react";
 import StopGenerationButton from "./StopGenerationButton";
 import AvailableAgentsButton, {
   AvailableAgents,
+  SQLModeButton,
   useAvailableAgents,
 } from "./AgentMenu";
 import TextSizeButton from "./TextSizeMenu";
@@ -335,6 +336,7 @@ export default function PromptInput({
                   showing={showAgents}
                   setShowAgents={setShowAgents}
                 />
+                <SQLModeButton sendCommand={sendCommand} />
                 <TextSizeButton />
                 <LLMSelectorAction />
               </div>

@@ -742,6 +742,22 @@ function mergeConnections(existingConnections = [], updates = []) {
         engine: update.engine,
         database_id: update.database_id,
         connectionString: update.connectionString,
+        ...(update.context !== undefined ? { context: update.context } : {}),
+      });
+    });
+
+  // Handle 'action:update-context' — update only the context field on an existing connection.
+  updates
+    .filter((conn) => conn.action === "update-context")
+    .forEach((update) => {
+      updatedConnections = updatedConnections.map((conn) => {
+        if (conn.database_id !== update.database_id) return conn;
+        return {
+          ...conn,
+          ...(update.context !== undefined
+            ? { context: update.context }
+            : { context: null }),
+        };
       });
     });
 

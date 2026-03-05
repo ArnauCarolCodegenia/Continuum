@@ -38,6 +38,7 @@ const docSummarizer = {
               }),
             },
           ],
+          // JSON schema defining the arguments the LLM must provide to call this tool
           parameters: {
             $schema: "http://json-schema.org/draft-07/schema#",
             type: "object",

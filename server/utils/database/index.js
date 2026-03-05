@@ -1,3 +1,15 @@
+/**
+ * Database Utilities
+ * 
+ * This file contains helper functions for managing and verifying the SQLite database schema
+ * and initializing startup requirements.
+ * 
+ * Key responsibilities:
+ * - checkForMigrations / validateTablePragmas: A lightweight, custom migration system that checks if
+ *   required columns exist in SQLite tables and runs ALTER TABLE scripts if they don't, 
+ *   keeping local schemas up-to-date across versions.
+ * - setupTelemetry: Initializes anonymous telemetry reporting on server boot unless disabled.
+ */
 const { getGitVersion } = require("../../endpoints/utils");
 const { Telemetry } = require("../../models/telemetry");
 
@@ -23,18 +35,26 @@ function checkColumnTemplate(tablename = null, column = null) {
 async function checkForMigrations(model, db) {
   if (model.migrations().length === 0) return;
   const toMigrate = [];
+  
+  // Loop through all defined migrations for the specific model
   for (const { colName, execCmd, doif } of model.migrations()) {
+    // Check if the necessary column exists in the SQLite table
     const { _exists } = await db.get(
       checkColumnTemplate(model.tablename, colName)
     );
     const colExists = _exists !== 0;
+    
+    // Skip if the condition for migrating is not met (e.g. drop if col exists, omit if doesn't)
     if (colExists !== doif) continue;
 
+    // Collect the valid SQL ALTER TABLE command
     toMigrate.push(execCmd);
   }
 
+  // If no migrations are needed, return immediately to save resources
   if (toMigrate.length === 0) return;
 
+  // Execute all collected migration queries as a single script
   console.log(`Running ${toMigrate.length} migrations`, toMigrate);
   await db.exec(toMigrate.join(";\n"));
   return;
@@ -47,6 +67,8 @@ async function checkForMigrations(model, db) {
 // it will be stubbed until the /api/migrate endpoint is GET.
 async function validateTablePragmas(force = false) {
   try {
+    // In production, migrations do not run automatically on boot so as to avoid Docker crashing.
+    // They wait until the /api/migrate endpoint is requested.
     if (process.env.NODE_ENV !== "development" && force === false) {
       console.log(
         `\x1b[34m[MIGRATIONS STUBBED]\x1b[0m Please ping /migrate once server starts to run migrations`

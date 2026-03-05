@@ -1,3 +1,15 @@
+/**
+ * MCP Hypervisor
+ * 
+ * This class serves as the core process manager (hypervisor) for Model Context Protocol (MCP) servers.
+ * MCP allows the LLM to securely interact with external tools and data sources on your local machine or network.
+ * 
+ * Key responsibilities:
+ * - Booting, tracking, and stopping external MCP server processes (via stdio, http, or sse transports).
+ * - Managing the `anythingllm_mcp_servers.json` configuration file.
+ * - Injecting the correct environment variables (PATH, NODE_PATH) so MCP processes can run tools like `npx`.
+ * - Handling standard streams and transport layers for bidirectional communication with MCP tools.
+ */
 const { safeJsonParse } = require("../../http");
 const path = require("path");
 const fs = require("fs");
@@ -420,22 +432,27 @@ class MCPHypervisor {
 
     this.#validateServerDefinitionByType(name, server, serverType);
     this.log(`Attempting to start MCP server: ${name}`);
+    
+    // Create an instance of the MCP Client pointing to the external server
     const mcp = new Client({ name: name, version: "1.0.0" });
+    
+    // Setup the correct transport layer protocol (stdio or http/sse)
     const transport = await this.#setupServerTransport(server, serverType);
 
-    // Add connection event listeners
+    // Add connection event listeners for debugging and error handling
     transport.onclose = () => this.log(`${name} - Transport closed`);
     transport.onerror = (error) =>
       this.log(`${name} - Transport error:`, error);
     transport.onmessage = (message) =>
       this.log(`${name} - Transport message:`, message);
 
-    // Connect and await the connection with a timeout
+    // Store the server instance in memory map
     this.mcps[name] = mcp;
     const connectionPromise = mcp.connect(transport);
 
     let timeoutId;
     const timeoutPromise = new Promise((_, reject) => {
+      // Fail the promise if the MCP server takes longer than 30s to respond
       timeoutId = setTimeout(
         () => reject(new Error("Connection timeout")),
         30_000
@@ -443,6 +460,7 @@ class MCPHypervisor {
     });
 
     try {
+      // Race the connection against the timeout to avoid hanging the app boot
       await Promise.race([connectionPromise, timeoutPromise]);
       if (timeoutId) clearTimeout(timeoutId);
     } catch (error) {

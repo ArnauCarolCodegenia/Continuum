@@ -154,7 +154,32 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
   }
 
   if (data.type === "fileDownload") {
-    saveAs(data.content.b64Content, data.content.filename ?? "unknown.txt");
+    const filename = data.content.filename || "unknown.txt";
+    const b64Content = data.content.b64Content;
+
+    if (filename.toLowerCase().endsWith(".html")) {
+      try {
+        const base64Data = b64Content.split(",")[1] || b64Content;
+        const byteString = atob(base64Data);
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([ab], { type: "text/html" });
+        const blobUrl = URL.createObjectURL(blob);
+        const newWindow = window.open(blobUrl, "_blank");
+        
+        if (!newWindow) {
+          saveAs(b64Content, filename); // Fallback to download if popup blocked
+        }
+        return;
+      } catch (e) {
+        console.error("Failed to open HTML in new tab", e);
+      }
+    }
+
+    saveAs(b64Content, filename);
     return;
   }
 

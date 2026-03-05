@@ -40,6 +40,7 @@ module.exports.SqlAgentQuery = {
               }),
             },
           ],
+          // JSON schema defining the arguments the LLM must provide to call this tool
           parameters: {
             $schema: "http://json-schema.org/draft-07/schema#",
             type: "object",
@@ -57,7 +58,8 @@ module.exports.SqlAgentQuery = {
             },
             additionalProperties: false,
           },
-          required: ["database_id", "table_name"],
+          required: ["database_id", "sql_query"],
+          //required: ["database_id", "table_name"],
           handler: async function ({ database_id = "", sql_query = "" }) {
             this.super.handlerProps.log(`Using the sql-query tool.`);
             try {
@@ -78,6 +80,14 @@ module.exports.SqlAgentQuery = {
               const db = getDBClient(databaseConfig.engine, databaseConfig);
 
               this.super.introspect(`Running SQL: ${sql_query}`);
+              
+              // Prevent common mutating commands natively
+              const isMutatingQuery = /^\s*(INSERT|UPDATE|DELETE|DROP|ALTER|TRUNCATE|GRANT|REVOKE|COMMIT|ROLLBACK|REPLACE|UPSERT)\b/i.test(sql_query);
+              if (isMutatingQuery) {
+                this.super.handlerProps.log(`sql-query tool rejected mutating query`);
+                return `Error: The query was rejected because mutating operations (INSERT, UPDATE, DELETE, etc.) are strictly prohibited. You may only run SELECT queries.`;
+              }
+
               const result = await db.runQuery(sql_query);
               if (result.error) {
                 this.super.handlerProps.log(
@@ -86,6 +96,15 @@ module.exports.SqlAgentQuery = {
                 );
                 this.super.introspect(`Error: ${result.error}`);
                 return `There was an error running the query: ${result.error}`;
+              }
+
+              // Guard against massive payloads crashing the LLM context (hard limit of 100 rows)
+              const MAX_ROWS = 500;
+              const originalCount = result.rows?.length || 0;
+              if (originalCount > MAX_ROWS) {
+                result.rows = result.rows.slice(0, MAX_ROWS);
+                result.warning = `Results were truncated. Showing ${MAX_ROWS} of ${originalCount} rows to prevent context length overflow. Please use LIMIT/OFFSET or more specific filtering if you need other data.`;
+                this.super.introspect(result.warning);
               }
 
               return JSON.stringify(result);

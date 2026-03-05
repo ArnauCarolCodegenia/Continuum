@@ -32,6 +32,27 @@ export default function AgentSQLConnectorSelection({
     );
   }
 
+  /**
+   * Update the per-DB context for a given database_id.
+   * Marks the connection as "update" so mergeConnections on the server
+   * will include the new context field when it is saved.
+   */
+  function handleContextEdit(databaseId, newContext) {
+    setHasChanges(true);
+    setConnections((prev) =>
+      prev.map((conn) => {
+        if (conn.database_id !== databaseId) return conn;
+        return {
+          ...conn,
+          context: newContext,
+          // Mark as "add" so the server mergeConnections re-includes it
+          // with the updated context. We need to pass the connectionString too.
+          action: "update-context",
+        };
+      })
+    );
+  }
+
   return (
     <>
       <div className="p-2">
@@ -65,8 +86,10 @@ export default function AgentSQLConnectorSelection({
             className="w-full rounded-md"
           />
           <p className="text-theme-text-secondary text-opacity-60 text-xs font-medium py-1.5">
-            Enable your agent to be able to leverage SQL to answer you questions
-            by connecting to various SQL database providers.
+            Enable your agent to be able to leverage SQL to answer your
+            questions by connecting to various SQL database providers. You can
+            also add context and example queries per database to improve
+            response quality.
           </p>
           {enabled && (
             <>
@@ -85,6 +108,12 @@ export default function AgentSQLConnectorSelection({
                 <p className="text-theme-text-primary font-semibold text-sm">
                   Your database connections
                 </p>
+                <p className="text-white/40 text-xs">
+                  Click the{" "}
+                  <span className="text-blue-400 font-medium">ℹ</span> icon on
+                  any connection to add context and example queries that help
+                  the SQL agent give better answers.
+                </p>
                 <div className="flex flex-col gap-y-3">
                   {connections
                     .filter((connection) => connection.action !== "remove")
@@ -93,6 +122,7 @@ export default function AgentSQLConnectorSelection({
                         key={connection.database_id}
                         connection={connection}
                         onRemove={handleRemoveConnection}
+                        onContextEdit={handleContextEdit}
                       />
                     ))}
                   <button

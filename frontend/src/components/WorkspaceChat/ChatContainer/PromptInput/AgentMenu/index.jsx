@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import { At } from "@phosphor-icons/react";
+import { At, Database } from "@phosphor-icons/react";
 import { useIsAgentSessionActive } from "@/utils/chat/agent";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
@@ -26,6 +26,41 @@ export default function AvailableAgentsButton({ showing, setShowAgents }) {
       />
       <Tooltip
         id="tooltip-agent-list-btn"
+        place="top"
+        delayShow={300}
+        className="tooltip !text-xs z-99"
+      />
+    </div>
+  );
+}
+
+/**
+ * A dedicated SQL Mode button that, when clicked, pre-fills the prompt
+ * with an @agent command instructing the agent to query all connected databases.
+ */
+export function SQLModeButton({ sendCommand }) {
+  const agentSessionActive = useIsAgentSessionActive();
+  if (agentSessionActive) return null;
+  return (
+    <div
+      id="sql-mode-btn"
+      data-tooltip-id="tooltip-sql-mode-btn"
+      data-tooltip-content="SQL Mode – query your connected databases"
+      aria-label="SQL Mode"
+      onClick={() =>
+        sendCommand({
+          text: "@agent Search the connected SQL databases and answer using real data: ",
+          writeMode: "replace",
+        })
+      }
+      className="flex justify-center items-center cursor-pointer"
+    >
+      <Database
+        color="var(--theme-sidebar-footer-icon-fill)"
+        className="w-[22px] h-[22px] pointer-events-none text-theme-text-primary opacity-60 hover:opacity-100 light:opacity-100 light:hover:opacity-60"
+      />
+      <Tooltip
+        id="tooltip-sql-mode-btn"
         place="top"
         delayShow={300}
         className="tooltip !text-xs z-99"
@@ -110,6 +145,7 @@ export function AvailableAgents({
                   <AbilityTag text="list-documents" />
                   <AbilityTag text="summarize-document" />
                   <AbilityTag text="chart-generation" />
+                  <AbilityTag text="sql-databases" />
                 </div>
               </div>
             </button>

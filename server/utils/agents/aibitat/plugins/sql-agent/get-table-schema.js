@@ -31,6 +31,7 @@ module.exports.SqlAgentGetTableSchema = {
               }),
             },
           ],
+          // JSON schema defining the arguments the LLM must provide to call this tool
           parameters: {
             $schema: "http://json-schema.org/draft-07/schema#",
             type: "object",
@@ -57,7 +58,7 @@ module.exports.SqlAgentGetTableSchema = {
               );
               if (!databaseConfig) {
                 this.super.handlerProps.log(
-                  `sql-get-table-schema to find config!`,
+                  `sql-get-table-schema failed to find config!`,
                   database_id
                 );
                 return `No database connection for ${database_id} was found!`;

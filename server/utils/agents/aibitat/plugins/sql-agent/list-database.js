@@ -9,7 +9,7 @@ module.exports.SqlAgentListDatabase = {
           super: aibitat,
           name: this.name,
           description:
-            "List all available databases via `list_databases` you currently have access to. Returns a unique string identifier `database_id` that can be used for future calls.",
+            "List all available databases via `list_databases` you currently have access to. Returns a unique string identifier `database_id` that can be used for future calls. Each database may also include a `context` object with a description, table details, and example queries — use this context to write better SQL queries.",
           examples: [
             {
               prompt: "What databases can you access?",
@@ -24,6 +24,7 @@ module.exports.SqlAgentListDatabase = {
               call: JSON.stringify({}),
             },
           ],
+          // JSON schema defining the arguments the LLM must provide to call this tool
           parameters: {
             $schema: "http://json-schema.org/draft-07/schema#",
             type: "object",
@@ -38,7 +39,7 @@ module.exports.SqlAgentListDatabase = {
 
             const connections = (await listSQLConnections()).map((conn) => {
               const { connectionString, ...rest } = conn;
-              return rest;
+              return rest; // includes engine, database_id, and context if present
             });
             return JSON.stringify(connections);
           },

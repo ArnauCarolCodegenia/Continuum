@@ -1,3 +1,15 @@
+/**
+ * MCP Compatibility Layer
+ * 
+ * This class extends the MCPHypervisor to bridge the gap between running MCP Server processes 
+ * and the internal AnythingLLM agent execution environment (Aibitat).
+ * 
+ * Key responsibilities:
+ * - Converting available MCP tools into native Aibitat plugin formats that the LLM agent can "read" and execute.
+ * - Handling tool invocation requests and routing them to the correct background MCP server process.
+ * - Safely serializing results (handling circular references or massive objects) returned by the MCP servers so the LLM doesn't crash.
+ * - Providing a status API to the frontend about which MCP servers are online and what tools they expose.
+ */
 const MCPHypervisor = require("./hypervisor");
 
 class MCPCompatibilityLayer extends MCPHypervisor {
@@ -31,6 +43,7 @@ class MCPCompatibilityLayer extends MCPHypervisor {
 
     let tools;
     try {
+      // Query the live external MCP server for an array of tools it exposes
       const response = await mcp.listTools();
       tools = response.tools;
     } catch (error) {
@@ -75,10 +88,13 @@ class MCPCompatibilityLayer extends MCPHypervisor {
                     aibitat.introspect(
                       `Executing MCP server: ${name} with ${JSON.stringify(args, null, 2)}`
                     );
+                    
+                    // Transmit the selected tool name and mapped arguments back to the MCP container process
                     const result = await currentMcp.callTool({
                       name: tool.name,
                       arguments: args,
                     });
+                    
                     aibitat.handlerProps.log(
                       `MCP server: ${name}:${tool.name} completed successfully`,
                       result
@@ -86,6 +102,8 @@ class MCPCompatibilityLayer extends MCPHypervisor {
                     aibitat.introspect(
                       `MCP server: ${name}:${tool.name} completed successfully`
                     );
+                    
+                    // Turn any format the MCP plugin outputs into stringified JSON so the LLM format parses correctly
                     return MCPCompatibilityLayer.returnMCPResult(result);
                   } catch (error) {
                     aibitat.handlerProps.log(

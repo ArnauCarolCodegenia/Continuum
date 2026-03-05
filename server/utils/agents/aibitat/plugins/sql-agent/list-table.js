@@ -29,6 +29,7 @@ module.exports.SqlAgentListTables = {
               call: JSON.stringify({ database_id: "primary-logs" }),
             },
           ],
+          // JSON schema defining the arguments the LLM must provide to call this tool
           parameters: {
             $schema: "http://json-schema.org/draft-07/schema#",
             type: "object",

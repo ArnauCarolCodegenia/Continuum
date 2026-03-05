@@ -68,8 +68,14 @@ export function Chartable({ props, workspace }) {
     typeof content.dataset === "string"
       ? safeJsonParse(content.dataset, [])
       : content.dataset;
-  const value = data.length > 0 ? Object.keys(data[0])[1] : "value";
+  
+  // Extract all data categories except 'name' to support multi-line/bar charts
+  const categories = data.length > 0 ? Object.keys(data[0]).filter(k => k !== 'name') : ["value"];
+  const value = categories[0] || "value";
   const title = content?.title;
+  
+  // Pre-defined color palette for multi-metric charts
+  const chartColors = ["blue", "cyan", "emerald", "violet", "rose", "amber", "teal", "fuchsia", "indigo", "pink"];
 
   const renderChart = () => {
     switch (chartType) {
@@ -83,8 +89,8 @@ export function Chartable({ props, workspace }) {
               className="h-[350px]"
               data={data}
               index="name"
-              categories={[value]}
-              colors={[color || "blue", "cyan"]}
+              categories={categories}
+              colors={chartColors}
               showLegend={showLegend}
               valueFormatter={dataFormatter}
             />
@@ -100,8 +106,8 @@ export function Chartable({ props, workspace }) {
               className="h-[350px]"
               data={data}
               index="name"
-              categories={[value]}
-              colors={[color || "blue"]}
+              categories={categories}
+              colors={chartColors}
               showLegend={showLegend}
               valueFormatter={dataFormatter}
               layout={"vertical"}
@@ -119,8 +125,8 @@ export function Chartable({ props, workspace }) {
               className="h-[400px]"
               data={data}
               index="name"
-              categories={[value]}
-              colors={[color || "blue"]}
+              categories={categories}
+              colors={chartColors}
               showLegend={showLegend}
               valueFormatter={dataFormatter}
             />
@@ -134,8 +140,8 @@ export function Chartable({ props, workspace }) {
             </h3>
             {showLegend && (
               <Legend
-                categories={[value]}
-                colors={[color || "blue", color || "blue"]}
+                categories={categories}
+                colors={chartColors}
                 className="mb-5 justify-end"
               />
             )}
@@ -168,19 +174,16 @@ export function Chartable({ props, workspace }) {
                 }}
               />
               <Tooltip legendColor={getTremorColor(color || "blue")} />
-              <Line
-                type="linear"
-                dataKey={value}
-                stroke={getTremorColor(color || "blue")}
-                dot={false}
-                strokeWidth={2}
-              />
-              <Bar
-                dataKey="value"
-                name="value"
-                type="linear"
-                fill={getTremorColor(color || "blue")}
-              />
+              {categories.map((cat, i) => (
+                <Line
+                  key={cat}
+                  type="linear"
+                  dataKey={cat}
+                  stroke={getTremorColor(chartColors[i % chartColors.length])}
+                  dot={false}
+                  strokeWidth={2}
+                />
+              ))}
             </ComposedChart>
           </div>
         );
@@ -193,8 +196,8 @@ export function Chartable({ props, workspace }) {
             {showLegend && (
               <div className="flex justify-end">
                 <Legend
-                  categories={[value]}
-                  colors={[color || "blue", color || "blue"]}
+                  categories={categories}
+                  colors={chartColors}
                   className="mb-5"
                 />
               </div>
@@ -227,8 +230,10 @@ export function Chartable({ props, workspace }) {
                   fontFamily: "Inter; Helvetica",
                 }}
               />
-              <Tooltip legendColor={getTremorColor(color || "blue")} />
-              <Scatter dataKey={value} fill={getTremorColor(color || "blue")} />
+              <Tooltip legendColor={getTremorColor(chartColors[0])} />
+              {categories.map((cat, i) => (
+                <Scatter key={cat} dataKey={cat} fill={getTremorColor(chartColors[i % chartColors.length])} />
+              ))}
             </ScatterChart>
           </div>
         );
@@ -267,8 +272,8 @@ export function Chartable({ props, workspace }) {
             {showLegend && (
               <div className="flex justify-end">
                 <Legend
-                  categories={[value]}
-                  colors={[color || "blue", color || "blue"]}
+                  categories={categories}
+                  colors={chartColors}
                   className="mb-5"
                 />
               </div>
@@ -284,13 +289,17 @@ export function Chartable({ props, workspace }) {
               <PolarGrid />
               <PolarAngleAxis dataKey="name" tick={{ fill: "white" }} />
               <PolarRadiusAxis tick={{ fill: "white" }} />
-              <Tooltip legendColor={getTremorColor(color || "blue")} />
-              <Radar
-                dataKey="value"
-                stroke={getTremorColor(color || "blue")}
-                fill={getTremorColor(color || "blue")}
-                fillOpacity={0.6}
-              />
+              <Tooltip legendColor={getTremorColor(chartColors[0])} />
+              {categories.map((cat, i) => (
+                <Radar
+                   key={cat}
+                   dataKey={cat}
+                   name={cat}
+                   stroke={getTremorColor(chartColors[i % chartColors.length])}
+                   fill={getTremorColor(chartColors[i % chartColors.length])}
+                   fillOpacity={0.6}
+                />
+              ))}
             </RadarChart>
           </div>
         );
@@ -303,8 +312,8 @@ export function Chartable({ props, workspace }) {
             {showLegend && (
               <div className="flex justify-end">
                 <Legend
-                  categories={[value]}
-                  colors={[color || "blue", color || "blue"]}
+                  categories={categories}
+                  colors={chartColors}
                   className="mb-5"
                 />
               </div>
@@ -340,8 +349,8 @@ export function Chartable({ props, workspace }) {
             {showLegend && (
               <div className="flex justify-end">
                 <Legend
-                  categories={[value]}
-                  colors={[color || "blue", color || "blue"]}
+                  categories={categories}
+                  colors={chartColors}
                   className="mb-5"
                 />
               </div>
@@ -368,8 +377,8 @@ export function Chartable({ props, workspace }) {
             {showLegend && (
               <div className="flex justify-end">
                 <Legend
-                  categories={[value]}
-                  colors={[color || "blue", color || "blue"]}
+                  categories={categories}
+                  colors={chartColors}
                   className="mb-5"
                 />
               </div>

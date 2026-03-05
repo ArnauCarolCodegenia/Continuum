@@ -1,3 +1,14 @@
+/**
+ * BackgroundWorkerService
+ * 
+ * This service manages background jobs and scheduled tasks for AnythingLLM using the 'bree' library.
+ * It runs in a separate process/thread context to prevent blocking the main Node.js event loop.
+ * 
+ * Key responsibilities:
+ * - Running periodic cleanup jobs (e.g., cleaning up orphan documents).
+ * - Running document synchronization jobs if continuous syncing is enabled.
+ * - Managing the lifecycle (boot, stop, graceful exit) of the background job scheduler.
+ */
 const path = require("path");
 const Graceful = require("@ladjs/graceful");
 const Bree = require("@mintplex-labs/bree");
@@ -42,20 +53,26 @@ class BackgroundService {
 
   async boot() {
     const { DocumentSyncQueue } = require("../../models/documentSyncQueue");
+    // Check the database to see if document auto-sync is enabled by the user
     this.documentSyncEnabled = await DocumentSyncQueue.enabled();
+    // Gather all jobs that need to be run based on the current settings
     const jobsToRun = this.jobs();
 
     this.#log("Starting...");
+    // Initialize the Bree job scheduler to handle background processes
     this.bree = new Bree({
       logger: this.logger,
       root: this.#root,
       jobs: jobsToRun,
       errorHandler: this.onError,
       workerMessageHandler: this.onWorkerMessageHandler,
-      runJobsAs: "process",
+      runJobsAs: "process", // Run jobs in separate processes instead of threads
     });
+    // Set up Graceful to ensure jobs and background processes stop cleanly on app exit
     this.graceful = new Graceful({ brees: [this.bree], logger: this.logger });
     this.graceful.listen();
+    
+    // Begin the job scheduler
     this.bree.start();
     this.#log(
       `Service started with ${jobsToRun.length} jobs`,
