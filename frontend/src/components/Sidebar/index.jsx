@@ -55,7 +55,7 @@ export default function Sidebar() {
         </div>
         <div
           ref={sidebarRef}
-          className="relative m-[16px] rounded-[20px] bg-theme-bg-sidebar border-[1.5px] border-[#d4d9e4] light:border-none min-w-[250px] p-[10px] h-[calc(100%-76px)] shadow-[0_1px_8px_rgba(0,0,0,0.04)]"
+          className="relative m-[16px] rounded-[20px] bg-theme-bg-sidebar border border-white/10 border-t-[2px] border-t-blue-500/30 min-w-[250px] p-[10px] h-[calc(100%-76px)] shadow-lg shadow-black/20"
         >
           <div className="flex flex-col h-full overflow-x-hidden">
             <div className="flex-grow flex flex-col min-w-[235px]">

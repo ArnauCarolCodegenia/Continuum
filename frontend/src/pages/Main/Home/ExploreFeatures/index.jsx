@@ -112,30 +112,30 @@ function FeatureCard({
   isNew,
 }) {
   return (
-    <div className="border border-theme-home-border rounded-lg py-4 px-5 flex flex-col justify-between gap-y-4">
+    <div className="border border-white/10 bg-white/3 backdrop-blur-sm rounded-xl py-5 px-6 flex flex-col justify-between gap-y-4 shadow-md shadow-black/10 card-glow hover:-translate-y-0.5 transition-transform duration-300">
       <div className="flex flex-col gap-y-2">
-        <h2 className="text-theme-home-text font-semibold flex items-center gap-x-2">
+        <h2 className="text-black font-bold text-base flex items-center gap-x-2 tracking-wide">
           {title}
         </h2>
-        <p className="text-theme-home-text-secondary text-sm">{description}</p>
+        <p className="text-black/85 text-sm leading-relaxed">{description}</p>
       </div>
       <div className="flex flex-col gap-y-[10px]">
         <button
           onClick={onPrimaryAction}
-          className="w-full h-[36px] border border-white/20 light:border-theme-home-button-secondary-border light:hover:border-theme-home-button-secondary-border-hover text-white rounded-lg text-theme-home-button-primary-text text-sm font-medium flex items-center justify-center gap-x-2.5 transition-all duration-200 light:hover:bg-transparent hover:bg-theme-home-button-secondary-hover hover:text-theme-home-button-secondary-hover-text"
+          className="w-full h-[38px] bg-gradient-to-r from-blue-600/80 to-indigo-600/80 hover:from-blue-500/90 hover:to-indigo-500/90 border-none text-white rounded-lg text-sm font-semibold flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-blue-500/20 hover:shadow-md"
         >
           {primaryAction}
         </button>
         {secondaryAction && (
           <div className="relative w-full">
             {isNew && (
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 px-2 font-semibold rounded-md text-[10px] text-theme-checklist-item-text bg-theme-checklist-item-bg light:bg-white/60">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 px-2.5 py-0.5 font-bold rounded-full text-[10px] text-teal-900 bg-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.6)] uppercase tracking-wider">
                 New
               </div>
             )}
             <button
               onClick={onSecondaryAction}
-              className="w-full h-[36px] bg-theme-home-button-secondary rounded-lg text-theme-home-button-secondary-text text-sm font-medium flex items-center justify-center transition-all duration-200 hover:bg-theme-home-button-secondary-hover hover:text-theme-home-button-secondary-hover-text"
+              className="w-full h-[38px] bg-slate-800/80 hover:bg-slate-700/80 border border-slate-600/50 rounded-lg text-white text-sm font-medium flex items-center justify-center transition-all duration-200"
             >
               {secondaryAction}
             </button>

@@ -64,11 +64,13 @@ export default function MenuOption({
         className={`
           flex items-center justify-between w-full
           transition-all duration-300
-          rounded-[6px]
+          rounded-[8px]
           ${
             isActive
-              ? "bg-theme-sidebar-subitem-selected font-medium border-outline"
-              : "hover:bg-theme-sidebar-subitem-hover"
+              ? "bg-blue-600/15 border-l-2 border-l-blue-500 font-medium"
+              : isChild
+              ? "hover:bg-white/5"
+              : "hover:bg-white/6"
           }
         `}
       >
@@ -79,26 +81,35 @@ export default function MenuOption({
           }`}
           onClick={hasChildren ? handleClick : undefined}
         >
-          {icon}
+          {!isChild && icon ? (
+            <span className={`flex items-center justify-center w-6 h-6 rounded-md mr-1 ${
+              isActive
+                ? "text-blue-300"
+                : "text-blue-400/70"
+            }`}>
+              {icon}
+            </span>
+          ) : icon}
           <p
             className={`${
               isChild ? "text-xs" : "text-sm"
-            } leading-loose whitespace-nowrap overflow-hidden ml-2 ${
+            } leading-loose whitespace-nowrap overflow-hidden ml-1 ${
               isActive
-                ? "text-white font-semibold"
-                : "text-white light:text-black"
+                ? "text-blue-200 font-semibold"
+                : isChild
+                ? "text-white/70"
+                : "text-white/90"
             } ${!icon && "pl-5"}`}
           >
             {btnText}
           </p>
         </Link>
         {hasChildren && (
-          <button onClick={handleClick} className="p-2 text-white">
+          <button onClick={handleClick} className="p-2 text-white/60 hover:text-white">
             <CaretRight
-              size={16}
+              size={14}
               weight="bold"
-              // color={isExpanded ? "#000000" : "var(--theme-sidebar-subitem-icon)"}
-              className={`transition-transform text-white light:text-black ${
+              className={`transition-transform ${
                 isExpanded ? "rotate-90" : ""
               }`}
             />
@@ -106,11 +117,11 @@ export default function MenuOption({
         )}
       </div>
       {isExpanded && hasChildren && (
-        <div className="mt-1 rounded-r-lg w-full">
+        <div className="mt-1 ml-3 pl-2 border-l border-blue-500/25 rounded-r-lg w-full">
           {childOptions.map((childOption, index) => (
             <MenuOption
               key={index}
-              {...childOption} // flex and roles go here.
+              {...childOption}
               user={user}
               isChild={true}
             />

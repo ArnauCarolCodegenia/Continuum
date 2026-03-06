@@ -15,7 +15,7 @@ const saveFileInBrowser = {
           tracker: new Deduplicator(),
           name: this.name,
           description:
-            "Save content to a file when the user explicitly asks for a download of the file. DO NOT use placeholders for the file content! You MUST provide the full, final text, code, or markdown to be saved. If the user asks for a PDF, you CANNOT generate binary PDFs natively. Instead, you MUST generate a beautifully formatted HTML file (with .html extension) that contains the requested information, embeds any requested charts using Chart.js via CDN, and includes a script to call window.print() on load so the user can save it as a PDF.",
+            "Save content to a file when the user explicitly asks for a download of the file. DO NOT use placeholders for the file content! You MUST provide the full, final text, code, or markdown to be saved. If the user asks for a PDF, you CANNOT generate binary PDFs natively. Instead, you MUST generate a beautifully formatted HTML file (with .html extension) that embeds any requested charts using Chart.js via CDN, and includes a script to call window.print() on load. CRITICAL: When using this tool to save code, HTML, or charts, DO NOT output the raw code or HTML in your regular chat response. Your chat response should only be a brief message confirming the file was generated and saved.",
           examples: [
             {
               prompt: "Save my report to a file named 'output'",

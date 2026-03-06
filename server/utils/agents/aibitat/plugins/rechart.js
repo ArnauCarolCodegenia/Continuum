@@ -11,6 +11,8 @@ const rechart = {
       name: this.name,
       setup(aibitat) {
         // Scrape a website and summarize the content based on objective if the content is too large.',
+        // Commented out rechart plugin logic to enforce use of Chart.js
+        /*
         aibitat.function({
           super: aibitat,
           name: this.name,
@@ -141,6 +143,7 @@ Example JSON string: '[{"name": "Jan", "sales": 4000, "profit": 2400}, {"name": 
             }
           },
         });
+        */
       },
     };
   },

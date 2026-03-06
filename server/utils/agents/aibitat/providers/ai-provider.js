@@ -351,13 +351,17 @@ class Provider {
     workspace = null,
     user = null,
   }) {
-    if (!workspace?.openAiPrompt)
-      return Provider.defaultSystemPromptForProvider(provider);
-    return await SystemPromptVariables.expandSystemPromptVariables(
-      workspace.openAiPrompt,
-      user?.id || null,
-      workspace.id
-    );
+    let basePrompt = "";
+    if (!workspace?.openAiPrompt) {
+      basePrompt = Provider.defaultSystemPromptForProvider(provider);
+    } else {
+      basePrompt = await SystemPromptVariables.expandSystemPromptVariables(
+        workspace.openAiPrompt,
+        user?.id || null,
+        workspace.id
+      );
+    }
+    return basePrompt + "\n\nCRITICAL: If you generate a chart or a downloadable file using any of your tools, DO NOT output the raw HTML, markdown, or code blocks in your conversational response. ONLY provide a brief conversational confirmation.";
   }
 
   /**

@@ -1,0 +1,87 @@
+﻿[
+    {
+        "Name": "shared-net",
+        "Id": "2b9a089f47e7978649250f1b155bc2054c2afa13a3b715fee404e57b37088943",
+        "Created": "2026-03-04T00:53:32.707083645Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.29.0.0/16",
+                    "Gateway": "172.29.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {},
+        "Containers": {
+            "006a48d9d753365ac8e5f4ae4940e14b2bd5fc1a75987d470a8b93d38e65e4d4": {
+                "Name": "pg_mock_db",
+                "EndpointID": "2d9f76ed10bae2ec622d241a2d546091a12312f0fce22c4b3feead89a9871385",
+                "MacAddress": "3a:fd:7a:88:5d:43",
+                "IPv4Address": "172.29.0.6/16",
+                "IPv6Address": ""
+            },
+            "1fa52a6f4e59e4eb7cf577bb92fe850ea2a422b1baddf60f9e231259dda98f90": {
+                "Name": "pg_company_b",
+                "EndpointID": "88c109c835d83f75381e51af4958f59090e6a0449aeded1f197b38acb5e0caf5",
+                "MacAddress": "c6:76:20:82:88:19",
+                "IPv4Address": "172.29.0.5/16",
+                "IPv6Address": ""
+            },
+            "3d1ea29f45b3ae78bb3791fda03d34a1c182eacaf7bde1add90f88a6c1c8cc7b": {
+                "Name": "mysql_company_a",
+                "EndpointID": "ffe3cca1b50898107d289887d48861521ca3281bc3b00a0503067c6bb4b64c30",
+                "MacAddress": "4e:78:0c:b5:12:12",
+                "IPv4Address": "172.29.0.4/16",
+                "IPv6Address": ""
+            },
+            "406b48eae1c77be41f8572eed11cfe9a14bd60d44e1892ffbc39cb6c3c513473": {
+                "Name": "qdrant",
+                "EndpointID": "38bac940a45eba76005659f71b8bb678c53d7b443bf9d815ca8d69fc4dab5d2b",
+                "MacAddress": "de:62:43:37:d3:ff",
+                "IPv4Address": "172.29.0.2/16",
+                "IPv6Address": ""
+            },
+            "8ec4eb572a78639bd74321f5b334e06bbdbe0ad50a43c2b1146bb0d60f720a32": {
+                "Name": "pg_facturas_db",
+                "EndpointID": "2867ea367abe742e00e861970ca7ee4bd04d4cb11aec0a1e8c3de2a3c88b50fd",
+                "MacAddress": "5a:78:9f:13:44:78",
+                "IPv4Address": "172.29.0.7/16",
+                "IPv6Address": ""
+            },
+            "d4683e30671151270e8a31964ad1d0a16e844882ba7a118465b9fb556709ad1f": {
+                "Name": "anythingllm",
+                "EndpointID": "916384cdbb7f990efb24d6daca42329fff4756d61dba7f34d837997c1d285cfa",
+                "MacAddress": "62:c0:26:bb:6f:e6",
+                "IPv4Address": "172.29.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.29.0.0/16": {
+                        "IPsInUse": 9,
+                        "DynamicIPsAvailable": 65527
+                    }
+                }
+            }
+        }
+    }
+]

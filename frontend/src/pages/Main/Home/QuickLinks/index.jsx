@@ -17,9 +17,11 @@ function QuickLinkCard({ icon: Icon, label, description, onClick }) {
     <div className="flex flex-col">
       <button
         onClick={onClick}
-        className="h-[45px] text-sm font-semibold bg-theme-home-button-secondary rounded-xl text-theme-home-button-secondary-text flex items-center justify-center gap-x-2.5 transition-all duration-200 hover:bg-theme-home-button-secondary-hover hover:text-theme-home-button-secondary-hover-text"
+        className="h-[48px] text-sm font-bold bg-white/5 backdrop-blur-md border border-white/10 rounded-xl text-white flex items-center justify-center gap-x-2.5 transition-all duration-300 shadow-md shadow-black/20 hover:-translate-y-1 hover:shadow-blue-500/20 hover:border-blue-500/50 hover:bg-gradient-to-r hover:from-blue-600/80 hover:to-indigo-600/80"
       >
-        <Icon size={16} />
+        <span className="p-1 rounded-lg bg-white/10 text-blue-300">
+          <Icon size={18} weight="duotone" />
+        </span>
         {label}
       </button>
       <button

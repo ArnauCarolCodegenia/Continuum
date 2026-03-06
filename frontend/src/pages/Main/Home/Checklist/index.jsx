@@ -163,7 +163,7 @@ export default function Checklist() {
       </div>
 
       <div
-        className={`rounded-lg p-4 lg:p-6 bg-theme-home-bg-card relative ${isCompleted ? "blur-sm" : ""}`}
+        className={`rounded-xl p-4 lg:p-6 bg-white/5 backdrop-blur-md border-[0.5px] border-l-4 border-l-blue-500 border-white/20 shadow-xl shadow-black/20 card-glow relative ${isCompleted ? "blur-sm" : ""}`}
       >
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center gap-x-3">

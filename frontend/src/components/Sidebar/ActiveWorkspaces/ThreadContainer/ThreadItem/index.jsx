@@ -62,7 +62,8 @@ export default function ThreadItem({
         className="h-full"
       />
       <div
-        className={`flex w-full items-center justify-between pr-2 group relative ${isActive ? "bg-[var(--theme-sidebar-thread-selected)] border border-solid border-transparent light:border-blue-400" : "hover:bg-theme-sidebar-subitem-hover"} rounded-[4px]`}
+        className={`flex w-full items-center justify-between pr-2 group relative ${isActive ? "border border-solid border-transparent light:border-blue-400" : "hover:bg-white/15"} rounded-[4px]`}
+        style={isActive ? { backgroundColor: "#ffffff" } : undefined}
       >
         {thread.deleted ? (
           <div className="w-full flex justify-between">
@@ -98,7 +99,7 @@ export default function ThreadItem({
           >
             <p
               className={`text-left text-sm truncate max-w-[150px] ${
-                isActive ? "font-medium text-white" : "text-theme-text-primary"
+                isActive ? "font-medium !text-black" : "text-white/80 light:text-theme-text-primary"
               }`}
             >
               {thread.name}
@@ -116,7 +117,7 @@ export default function ThreadItem({
                 onClick={() => toggleMarkForDeletion(thread.id)}
               >
                 <X
-                  className="text-zinc-300 light:text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary"
+                  className={`${isActive ? "text-slate-600 hover:text-black" : "text-zinc-300 hover:text-white"} light:text-theme-text-secondary hover:light:text-theme-text-primary`}
                   weight="bold"
                   size={18}
                 />
@@ -130,7 +131,7 @@ export default function ThreadItem({
                   aria-label="Thread options"
                 >
                   <DotsThree
-                    className="text-slate-300 light:text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary"
+                    className={`${isActive ? "text-slate-600 hover:text-black" : "text-slate-300 hover:text-white"} light:text-theme-text-secondary hover:light:text-theme-text-primary`}
                     size={25}
                   />
                 </button>

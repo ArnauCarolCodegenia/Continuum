@@ -1,0 +1,32 @@
+version: "3.9"
+
+networks:
+  shared-net:
+    external: true
+
+services:
+  postgres_facturas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pg_facturas_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin1234
+      POSTGRES_DB: facturas_db
+    ports:
+      - "5434:5432" # Changed port to 5434 to avoid conflict
+    volumes:
+      - pg_facturas_data:/var/lib/postgresql/data
+    networks:
+      - default
+      - shared-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d facturas_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg_facturas_data:

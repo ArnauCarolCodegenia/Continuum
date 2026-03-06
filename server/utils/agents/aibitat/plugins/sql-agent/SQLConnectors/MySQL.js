@@ -62,7 +62,7 @@ class MySQLConnector {
   }
 
   getTablesSql() {
-    return `SELECT table_name, table_type FROM information_schema.tables WHERE table_schema = '${this.database_id}'`;
+    return `SELECT table_name FROM information_schema.tables WHERE table_schema = '${this.database_id}'`;
   }
   getTableSchemaSql(table_name) {
     return `SHOW COLUMNS FROM ${this.database_id}.${table_name};`;

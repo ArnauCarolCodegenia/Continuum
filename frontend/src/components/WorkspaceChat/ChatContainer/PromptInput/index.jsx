@@ -290,7 +290,7 @@ export default function PromptInput({
                 }}
                 value={promptInput}
                 spellCheck={Appearance.get("enableSpellCheck")}
-                className={`border-none cursor-text max-h-[50vh] md:max-h-[350px] md:min-h-[40px] mx-2 md:mx-0 pt-[12px] w-full leading-5 text-white bg-transparent placeholder:text-white/60 light:placeholder:text-theme-text-primary resize-none active:outline-none focus:outline-none flex-grow mb-1 pwa:!text-[16px] ${textSizeClass}`}
+                className={`border-none cursor-text max-h-[50vh] md:max-h-[350px] md:min-h-[40px] mx-2 md:mx-0 pt-[12px] w-full leading-5 text-theme-text-primary bg-transparent placeholder:text-theme-text-secondary/70 resize-none active:outline-none focus:outline-none focus:ring-0 flex-grow mb-1 pwa:!text-[16px] ${textSizeClass}`}
                 placeholder={t("chat_window.send_message")}
               />
               {isStreaming ? (
@@ -301,7 +301,7 @@ export default function PromptInput({
                     ref={formRef}
                     type="submit"
                     disabled={isDisabled}
-                    className="border-none inline-flex justify-center items-center rounded-full cursor-pointer w-[32px] h-[32px] ml-3 bg-[#4f63d2] hover:bg-[#3f51b8] disabled:bg-[#c5cbe0] disabled:cursor-not-allowed transition-all duration-200 shadow-sm group"
+                    className="border-none outline-none focus:outline-none focus:ring-0 focus-visible:outline-none active:outline-none inline-flex justify-center items-center rounded-full cursor-pointer w-[32px] h-[32px] ml-3 bg-[#4f63d2] hover:bg-[#3f51b8] disabled:bg-[#c5cbe0] disabled:cursor-not-allowed transition-all duration-200 shadow-sm group"
                     data-tooltip-id="send-prompt"
                     data-tooltip-content={
                       isDisabled
@@ -311,7 +311,7 @@ export default function PromptInput({
                     aria-label={t("chat_window.send")}
                   >
                     <PaperPlaneRight
-                      className="w-[16px] h-[16px] pointer-events-none text-white group-disabled:opacity-50"
+                      className="w-[16px] h-[16px] pointer-events-none text-theme-text-primary group-disabled:opacity-50"
                       weight="fill"
                     />
                     <span className="sr-only">Send message</span>
@@ -327,18 +327,7 @@ export default function PromptInput({
             </div>
             <div className="flex justify-between py-3.5 mx-3 mb-1">
               <div className="flex gap-x-2">
-                <AttachItem />
-                <SlashCommandsButton
-                  showing={showSlashCommand}
-                  setShowSlashCommand={setShowSlashCommand}
-                />
-                <AvailableAgentsButton
-                  showing={showAgents}
-                  setShowAgents={setShowAgents}
-                />
                 <SQLModeButton sendCommand={sendCommand} />
-                <TextSizeButton />
-                <LLMSelectorAction />
               </div>
               <div className="flex gap-x-2">
                 <SpeechToText sendCommand={sendCommand} />

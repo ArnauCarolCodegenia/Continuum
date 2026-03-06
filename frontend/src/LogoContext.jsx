@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import CustomLogo from "./media/logo/logo.jpg";
+import CustomLogo from "./media/logo/logo.png";
 import System from "./models/system";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";

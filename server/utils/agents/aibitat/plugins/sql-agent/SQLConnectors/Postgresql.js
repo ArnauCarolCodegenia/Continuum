@@ -57,7 +57,7 @@ class PostgresSQLConnector {
   }
 
   getTablesSql() {
-    return `SELECT table_name, table_type FROM information_schema.tables WHERE table_schema = '${this.schema}'`;
+    return `SELECT * FROM pg_catalog.pg_tables WHERE schemaname = '${this.schema}'`;
   }
   getTableSchemaSql(table_name) {
     return ` select column_name, data_type, character_maximum_length, column_default, is_nullable from INFORMATION_SCHEMA.COLUMNS where table_name = '${table_name}' AND table_schema = '${this.schema}'`;
