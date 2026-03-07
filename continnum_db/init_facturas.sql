@@ -14,7 +14,9 @@ CREATE TABLE facturas (
     moneda VARCHAR(10),
     forma_pago VARCHAR(50),
     canal_reserva VARCHAR(100),
-    nombre_usuario VARCHAR(255)
+    nombre_usuario VARCHAR(255),
+    rating INT,
+    observaciones TEXT
 );
 
 COPY facturas FROM '/docker-entrypoint-initdb.d/facturas_hoteles_1000.csv' DELIMITER ',' CSV HEADER;

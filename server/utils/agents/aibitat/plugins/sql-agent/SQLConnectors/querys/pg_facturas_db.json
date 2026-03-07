@@ -1,4 +1,4 @@
-data = {
+{
     "dataset": "pg_facturas_db",
     "qa": [
         {
@@ -40,6 +40,22 @@ data = {
         {
             "pregunta": "¿Cómo varía la facturación mensual a lo largo del tiempo?",
             "query": "SELECT DATE_TRUNC('month', fecha_factura) AS mes, SUM(precio_total) AS facturacion_mensual FROM facturas GROUP BY mes ORDER BY mes;"
+        },
+        {
+            "pregunta": "¿Cuál es la puntuación media (rating) por hotel?",
+            "query": "SELECT nombre_hotel, AVG(rating) AS rating_medio FROM facturas GROUP BY nombre_hotel ORDER BY rating_medio DESC;"
+        },
+        {
+            "pregunta": "¿Qué hotel tiene peor valoración media?",
+            "query": "SELECT nombre_hotel, AVG(rating) AS rating_medio FROM facturas GROUP BY nombre_hotel ORDER BY rating_medio ASC LIMIT 1;"
+        },
+        {
+            "pregunta": "¿Cuántas reseñas hay por cada nivel de rating?",
+            "query": "SELECT rating, COUNT(*) AS numero_resenas FROM facturas GROUP BY rating ORDER BY rating;"
+        },
+        {
+            "pregunta": "¿Qué hoteles tienen más comentarios negativos (rating <= 2)?",
+            "query": "SELECT nombre_hotel, COUNT(*) AS comentarios_negativos FROM facturas WHERE rating <= 2 GROUP BY nombre_hotel ORDER BY comentarios_negativos DESC;"
         }
     ]
 }

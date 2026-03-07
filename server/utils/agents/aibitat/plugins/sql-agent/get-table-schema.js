@@ -5,6 +5,7 @@ module.exports.SqlAgentGetTableSchema = {
       listSQLConnections,
       getDBClient,
     } = require("./SQLConnectors/index.js");
+    const { getDynamicExamples } = require("./load-examples.js");
 
     return {
       name: "sql-get-table-schema",
@@ -14,31 +15,7 @@ module.exports.SqlAgentGetTableSchema = {
           name: this.name,
           description:
             "Gets the table schema in SQL for a given `table` and `database_id`",
-          examples: [
-            {
-              prompt: "¿Cómo es la tabla de facturas en mi base de datos del espacio de trabajo?",
-              call: JSON.stringify({
-                database_id: "pg_facturas_db",
-                table_name: "facturas",
-              }),
-            },
-            {
-              prompt:
-                "Obtén el esquema de la tabla de usuarios en la base de datos de producción",
-              call: JSON.stringify({
-                database_id: "production",
-                table_name: "usuarios",
-              }),
-            },
-            {
-              prompt:
-                "Muestra las columnas de la tabla clientes",
-              call: JSON.stringify({
-                database_id: "pg_facturas_db",
-                table_name: "clientes",
-              }),
-            },
-          ],
+          examples: getDynamicExamples('schema'),
           // JSON schema defining the arguments the LLM must provide to call this tool
           parameters: {
             $schema: "http://json-schema.org/draft-07/schema#",

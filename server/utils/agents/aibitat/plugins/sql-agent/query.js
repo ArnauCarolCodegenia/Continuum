@@ -5,6 +5,7 @@ module.exports.SqlAgentQuery = {
       getDBClient,
       listSQLConnections,
     } = require("./SQLConnectors/index.js");
+    const { getDynamicExamples } = require("./load-examples.js");
 
     return {
       name: "sql-query",
@@ -14,41 +15,7 @@ module.exports.SqlAgentQuery = {
           name: this.name,
           description:
             "Run a read-only SQL query on a `database_id` which will return rows of data related to the query. The query must only be SELECT statements which do not modify the table data. There should be a reasonable LIMIT on the return quantity to prevent long-running queries. IMPORTANT: Before running any query, you MUST first use `sql-list-tables` and `sql-get-table-schema` to discover the actual table and column names. NEVER guess or assume column names — always check the schema first. If a query returns an error about a missing column or table, use the schema tools to find the correct names and retry.",
-          examples: [
-            {
-              prompt: "¿Cuántas facturas hay en total?",
-              call: JSON.stringify({
-                database_id: "pg_facturas_db",
-                sql_query: "SELECT COUNT(*) FROM facturas",
-              }),
-            },
-            {
-              prompt: "¿Me puedes decir el volumen total de ventas del mes pasado?",
-              call: JSON.stringify({
-                database_id: "sales-db",
-                sql_query:
-                  "SELECT SUM(sale_amount) AS total_sales FROM sales WHERE sale_date >= (CURRENT_DATE - INTERVAL '1 month')",
-              }),
-            },
-            {
-              prompt:
-                "¿Tenemos algún huésped en la tabla de facturas que se llame 'sam'?",
-              call: JSON.stringify({
-                database_id: "pg_facturas_db",
-                sql_query:
-                  "SELECT * FROM facturas WHERE nombre_usuario ILIKE '%sam%'",
-              }),
-            },
-            {
-              prompt:
-                "Dime cuáles son las 5 ciudades con más facturas registradas",
-              call: JSON.stringify({
-                database_id: "pg_facturas_db",
-                sql_query:
-                  "SELECT ciudad, COUNT(*) as cantidad FROM facturas GROUP BY ciudad ORDER BY cantidad DESC LIMIT 5",
-              }),
-            },
-          ],
+          examples: getDynamicExamples('query'),
           // JSON schema defining the arguments the LLM must provide to call this tool
           parameters: {
             $schema: "http://json-schema.org/draft-07/schema#",
