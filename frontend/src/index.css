@@ -7,110 +7,110 @@
 }
 
 :root {
-  /* Questiona - Deep Blue Dynamic Theme */
-  --theme-loader: #3b82f6;
+  /* Questiona - Modern Soft Dark Theme */
+  --theme-loader: #6366f1;
 
-  /* Backgrounds - layered blue-gray depth */
-  --theme-bg-primary: #0f172a;         /* Deepest navy - main app bg */
-  --theme-bg-secondary: #1e2d4a;       /* Mid navy - secondary panels */
-  --theme-bg-sidebar: #111827;         /* Near-black blue - sidebar */
-  --theme-bg-container: #1a2740;       /* Slightly lighter container bg */
-  --theme-bg-chat: #0f172a;            /* Deep navy for chat area */
-  --theme-bg-chat-input: #1e2d4a;      /* Chat input field bg */
-  --theme-popup-menu-bg: #1a2740;
+  /* Backgrounds - soft layered depth with warmth */
+  --theme-bg-primary: #0c0f1a;
+  --theme-bg-secondary: #161b2e;
+  --theme-bg-sidebar: #0e1221;
+  --theme-bg-container: #181d30;
+  --theme-bg-chat: #0c0f1a;
+  --theme-bg-chat-input: #161b2e;
+  --theme-popup-menu-bg: #1a1f35;
 
-  /* Text - high contrast white on dark blue */
-  --theme-text-primary: #e8f0fe;       /* Soft bright white with blue tint */
-  --theme-text-secondary: #93c5fd;     /* Light blue for secondary text */
-  --theme-placeholder: #6b7db3;        /* Muted blue-gray for placeholders */
+  /* Text - softer contrast, warm off-whites */
+  --theme-text-primary: #e2e8f0;
+  --theme-text-secondary: #94a3b8;
+  --theme-placeholder: #64748b;
 
-  /* Sidebar items - distinct contrast layers */
-  --theme-sidebar-item-default: #1a2740;       /* Default item: visible blue-navy */
-  --theme-sidebar-item-selected: #1d4ed8;      /* Selected: vivid blue */
-  --theme-sidebar-item-hover: #1e3a6e;         /* Hover: mid blue */
+  /* Sidebar items - refined subtle layers */
+  --theme-sidebar-item-default: #131729;
+  --theme-sidebar-item-selected: rgba(99, 102, 241, 0.18);
+  --theme-sidebar-item-hover: rgba(148, 163, 184, 0.06);
   --theme-sidebar-subitem-default: transparent;
-  --theme-sidebar-subitem-selected: #1d4ed8;
-  --theme-sidebar-thread-selected: #1e3a6e;
-  --theme-sidebar-subitem-hover: #1e3a6e;
-  --theme-sidebar-border: #2563eb40;           /* Subtle blue border */
+  --theme-sidebar-subitem-selected: rgba(99, 102, 241, 0.18);
+  --theme-sidebar-thread-selected: rgba(148, 163, 184, 0.06);
+  --theme-sidebar-subitem-hover: rgba(148, 163, 184, 0.06);
+  --theme-sidebar-border: rgba(148, 163, 184, 0.06);
 
-  --theme-sidebar-item-workspace-active: #93c5fd;
-  --theme-sidebar-item-workspace-inactive: #6b7db3;
-  --theme-sidebar-footer-icon: #111827;
-  --theme-sidebar-footer-icon-fill: #93c5fd;
-  --theme-sidebar-footer-icon-hover: #1e3a6e;
+  --theme-sidebar-item-workspace-active: #e2e8f0;
+  --theme-sidebar-item-workspace-inactive: #64748b;
+  --theme-sidebar-footer-icon: #0e1221;
+  --theme-sidebar-footer-icon-fill: #94a3b8;
+  --theme-sidebar-footer-icon-hover: rgba(148, 163, 184, 0.08);
 
-  /* Inputs */
-  --theme-chat-input-border: #2563eb60;
-  --theme-action-menu-bg: #1a2740;
-  --theme-action-menu-item-hover: rgba(59, 130, 246, 0.15);
-  --theme-settings-input-bg: #1e2d4a;
-  --theme-settings-input-placeholder: rgba(147, 197, 253, 0.5);
-  --theme-settings-input-active: rgba(59, 130, 246, 0.25);
-  --theme-settings-input-text: #e8f0fe;
-  --theme-modal-border: #2563eb50;
+  /* Inputs - very soft borders, gentle fills */
+  --theme-chat-input-border: rgba(148, 163, 184, 0.08);
+  --theme-action-menu-bg: #1a1f35;
+  --theme-action-menu-item-hover: rgba(99, 102, 241, 0.08);
+  --theme-settings-input-bg: #1a1f35;
+  --theme-settings-input-placeholder: rgba(148, 163, 184, 0.45);
+  --theme-settings-input-active: rgba(99, 102, 241, 0.12);
+  --theme-settings-input-text: #e2e8f0;
+  --theme-modal-border: rgba(148, 163, 184, 0.08);
 
-  /* Buttons */
-  --theme-button-primary: #2563eb;
-  --theme-button-primary-hover: #1d4ed8;
-  --theme-button-cta: #3b82f6;
-  --theme-button-text: #93c5fd;
-  --theme-button-code-hover-text: #60a5fa;
-  --theme-button-code-hover-bg: #1e3a6e;
+  /* Buttons - indigo accent, soft rounded feel */
+  --theme-button-primary: #6366f1;
+  --theme-button-primary-hover: #4f46e5;
+  --theme-button-cta: #818cf8;
+  --theme-button-text: #94a3b8;
+  --theme-button-code-hover-text: #818cf8;
+  --theme-button-code-hover-bg: rgba(99, 102, 241, 0.08);
   --theme-button-disable-hover-text: #fbbf24;
-  --theme-button-disable-hover-bg: #451a03;
+  --theme-button-disable-hover-bg: rgba(69, 26, 3, 0.4);
   --theme-button-delete-hover-text: #fca5a5;
-  --theme-button-delete-hover-bg: #7f1d1d;
+  --theme-button-delete-hover-bg: rgba(127, 29, 29, 0.4);
 
   /* File rows */
-  --theme-file-row-even: #1a2740;
-  --theme-file-row-odd: #1e2d4a;
-  --theme-file-row-selected-even: rgba(37, 99, 235, 0.3);
-  --theme-file-row-selected-odd: rgba(37, 99, 235, 0.2);
-  --theme-file-picker-hover: rgba(37, 99, 235, 0.12);
+  --theme-file-row-even: #131729;
+  --theme-file-row-odd: #161b2e;
+  --theme-file-row-selected-even: rgba(99, 102, 241, 0.15);
+  --theme-file-row-selected-odd: rgba(99, 102, 241, 0.1);
+  --theme-file-picker-hover: rgba(99, 102, 241, 0.06);
 
   /* Home/Dashboard */
-  --theme-home-text: #e8f0fe;
-  --theme-home-text-secondary: #93c5fd;
-  --theme-home-bg-card: #1a2740;
-  --theme-home-bg-button: #1a2740;
-  --theme-home-border: #2563eb40;
-  --theme-home-button-primary: #2563eb;
-  --theme-home-button-primary-hover: #1d4ed8;
-  --theme-home-button-secondary: #1e2d4a;
-  --theme-home-button-secondary-hover: #1e3a6e;
-  --theme-home-button-secondary-text: #e8f0fe;
-  --theme-home-button-secondary-hover-text: #93c5fd;
-  --theme-home-button-secondary-border: #2563eb50;
-  --theme-home-button-secondary-border-hover: #3b82f6;
-  --theme-home-update-card-bg: #1a2740;
-  --theme-home-update-card-hover: #1e3a6e;
-  --theme-home-update-source: #60a5fa;
+  --theme-home-text: #e2e8f0;
+  --theme-home-text-secondary: #94a3b8;
+  --theme-home-bg-card: #161b2e;
+  --theme-home-bg-button: #1a1f35;
+  --theme-home-border: rgba(148, 163, 184, 0.06);
+  --theme-home-button-primary: #6366f1;
+  --theme-home-button-primary-hover: #4f46e5;
+  --theme-home-button-secondary: #1a1f35;
+  --theme-home-button-secondary-hover: #222840;
+  --theme-home-button-secondary-text: #e2e8f0;
+  --theme-home-button-secondary-hover-text: #c7d2fe;
+  --theme-home-button-secondary-border: rgba(148, 163, 184, 0.08);
+  --theme-home-button-secondary-border-hover: rgba(99, 102, 241, 0.3);
+  --theme-home-update-card-bg: #161b2e;
+  --theme-home-update-card-hover: #1e2440;
+  --theme-home-update-source: #818cf8;
 
   /* Checklist */
-  --theme-checklist-item-bg: #1a2740;
-  --theme-checklist-item-bg-hover: #1e3a6e;
-  --theme-checklist-item-text: #e8f0fe;
-  --theme-checklist-item-completed-bg: #064e3b;
+  --theme-checklist-item-bg: #161b2e;
+  --theme-checklist-item-bg-hover: #1e2440;
+  --theme-checklist-item-text: #e2e8f0;
+  --theme-checklist-item-completed-bg: rgba(16, 185, 129, 0.08);
   --theme-checklist-item-completed-text: #6ee7b7;
-  --theme-checklist-checkbox-fill: #3b82f6;
+  --theme-checklist-checkbox-fill: #6366f1;
   --theme-checklist-checkbox-text: #ffffff;
-  --theme-checklist-item-hover: #2563eb;
-  --theme-checklist-checkbox-border: #6b7db3;
-  --theme-checklist-button-border: #3b82f6;
-  --theme-checklist-button-text: #60a5fa;
-  --theme-checklist-button-hover-bg: rgba(59, 130, 246, 0.15);
-  --theme-checklist-button-hover-border: rgba(59, 130, 246, 0.8);
+  --theme-checklist-item-hover: #6366f1;
+  --theme-checklist-checkbox-border: #64748b;
+  --theme-checklist-button-border: rgba(99, 102, 241, 0.3);
+  --theme-checklist-button-text: #818cf8;
+  --theme-checklist-button-hover-bg: rgba(99, 102, 241, 0.08);
+  --theme-checklist-button-hover-border: rgba(99, 102, 241, 0.5);
 
   /* Attachments */
-  --theme-attachment-bg: #1a2740;
-  --theme-attachment-error-bg: rgba(220, 38, 38, 0.2);
-  --theme-attachment-success-bg: #1a2740;
-  --theme-attachment-text: #e8f0fe;
-  --theme-attachment-text-secondary: rgba(232, 240, 254, 0.7);
-  --theme-attachment-icon: #e8f0fe;
-  --theme-attachment-icon-spinner: #3b82f6;
-  --theme-attachment-icon-spinner-bg: #1a2740;
+  --theme-attachment-bg: #161b2e;
+  --theme-attachment-error-bg: rgba(220, 38, 38, 0.12);
+  --theme-attachment-success-bg: #161b2e;
+  --theme-attachment-text: #e2e8f0;
+  --theme-attachment-text-secondary: rgba(226, 232, 240, 0.65);
+  --theme-attachment-icon: #e2e8f0;
+  --theme-attachment-icon-spinner: #6366f1;
+  --theme-attachment-icon-spinner-bg: #161b2e;
 }
 
 [data-theme="light"] {
@@ -260,7 +260,7 @@ body {
     Droid Sans,
     Helvetica Neue,
     sans-serif;
-  background-color: #0f172a;
+  background-color: #0c0f1a;
 }
 
 @media (max-width: 600px) {
@@ -307,17 +307,17 @@ button:focus, button:focus-visible, button:active {
   box-shadow: none;
 }
 
-/* Blue shimmer animation for selected/active sidebar items */
+/* Soft shimmer animation for selected/active sidebar items */
 @keyframes blueShimmer {
-  0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
-  50% { box-shadow: 0 0 8px 2px rgba(59, 130, 246, 0.25); }
-  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+  50% { box-shadow: 0 0 6px 1px rgba(99, 102, 241, 0.15); }
+  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
 }
 
 /* Subtle glow on chat input area */
 @keyframes inputBorderGlow {
-  0%, 100% { box-shadow: 0 0 0px rgba(59, 130, 246, 0); }
-  50% { box-shadow: 0 0 10px 1px rgba(59, 130, 246, 0.3); }
+  0%, 100% { box-shadow: 0 0 0px rgba(99, 102, 241, 0); }
+  50% { box-shadow: 0 0 8px 1px rgba(99, 102, 241, 0.15); }
 }
 
 #chat-container {
@@ -341,20 +341,20 @@ button:focus, button:focus-visible, button:active {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Card hover effect - subtle blue lift */
+/* Card hover effect - soft lift */
 .theme-card-hover {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .theme-card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(99, 102, 241, 0.08);
 }
 
-/* Glowing blue divider between major sections */
+/* Subtle divider between major sections */
 .section-divider {
   border: none;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #2563eb60, transparent);
+  background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.1), transparent);
   margin: 1rem 0;
 }
 
@@ -366,23 +366,22 @@ button:focus, button:focus-visible, button:active {
   content: "";
   position: absolute;
   left: -2px;
-  top: 15%;
-  height: 70%;
-  width: 3px;
-  background: #3b82f6;
-  border-radius: 0 3px 3px 0;
-  animation: blueShimmer 2s ease-in-out infinite;
+  top: 20%;
+  height: 60%;
+  width: 2px;
+  background: #6366f1;
+  border-radius: 0 2px 2px 0;
+  animation: blueShimmer 3s ease-in-out infinite;
 }
 
 /* Glassmorphism & Gradient Utilities */
 .settings-panel {
-  background: rgba(30, 45, 74, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  border-top: 2px solid rgba(59, 130, 246, 0.5);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background: rgba(22, 27, 46, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(148, 163, 184, 0.06);
+  border-radius: 20px;
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.15);
 }
 
 .gradient-section-header {
@@ -395,18 +394,17 @@ button:focus, button:focus-visible, button:active {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 100%;
+  width: 60%;
   height: 2px;
-  background: linear-gradient(90deg, #3b82f6, transparent);
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.5), transparent);
 }
 
 .card-glow {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card-glow:hover {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
-  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+  border-color: rgba(99, 102, 241, 0.2);
 }
 
 @font-face {

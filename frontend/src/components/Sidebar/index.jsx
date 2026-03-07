@@ -55,7 +55,7 @@ export default function Sidebar() {
         </div>
         <div
           ref={sidebarRef}
-          className="relative m-[16px] rounded-[20px] bg-theme-bg-sidebar border border-white/10 border-t-[2px] border-t-blue-500/30 min-w-[250px] p-[10px] h-[calc(100%-76px)] shadow-lg shadow-black/20"
+          className="relative m-[16px] rounded-[24px] bg-theme-bg-sidebar border border-white/[0.04] min-w-[250px] p-[10px] h-[calc(100%-76px)] shadow-[0_4px_40px_rgba(0,0,0,0.2)]"
         >
           <div className="flex flex-col h-full overflow-x-hidden">
             <div className="flex-grow flex flex-col min-w-[235px]">
@@ -65,7 +65,7 @@ export default function Sidebar() {
                   <ActiveWorkspaces />
                 </div>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 pt-4 pb-3 rounded-b-[18px] bg-theme-bg-sidebar bg-opacity-90 backdrop-filter backdrop-blur-md z-1 border-t border-[#d4d9e4]/40">
+              <div className="absolute bottom-0 left-0 right-0 pt-4 pb-3 rounded-b-[22px] bg-theme-bg-sidebar bg-opacity-90 backdrop-filter backdrop-blur-md z-1 border-t border-white/[0.04]">
                 <Footer />
               </div>
             </div>

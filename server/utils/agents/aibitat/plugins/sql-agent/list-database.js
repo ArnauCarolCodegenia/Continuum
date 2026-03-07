@@ -9,7 +9,7 @@ module.exports.SqlAgentListDatabase = {
           super: aibitat,
           name: this.name,
           description:
-            "List all available databases via `list_databases` you currently have access to. Returns a unique string identifier `database_id` that can be used for future calls. Each database may also include a `context` object with a description, table details, and example queries — use this context to write better SQL queries.",
+            "List all available databases via `list_databases` you currently have access to. Returns a unique string identifier `database_id` that can be used for future calls. Each database may also include a `context` object with a description, table details, and example queries — use this context to write better SQL queries. You should ALWAYS call this tool first when working with SQL to know which databases are available.",
           examples: [
             {
               prompt: "What databases can you access?",

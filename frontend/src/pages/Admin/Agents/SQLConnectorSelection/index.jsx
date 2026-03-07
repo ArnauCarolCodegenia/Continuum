@@ -15,6 +15,7 @@ export default function AgentSQLConnectorSelection({
 }) {
   const { isOpen, openModal, closeModal } = useModal();
   const [connections, setConnections] = useState([]);
+  const [editingConnection, setEditingConnection] = useState(null);
   useEffect(() => {
     Admin.systemPreferencesByFields(["agent_sql_connections"])
       .then((res) => setConnections(res?.settings?.agent_sql_connections ?? []))
@@ -37,6 +38,11 @@ export default function AgentSQLConnectorSelection({
    * Marks the connection as "update" so mergeConnections on the server
    * will include the new context field when it is saved.
    */
+  function handleEditConnection(connection) {
+    setEditingConnection(connection);
+    openModal();
+  }
+
   function handleContextEdit(databaseId, newContext) {
     setHasChanges(true);
     setConnections((prev) =>
@@ -123,11 +129,12 @@ export default function AgentSQLConnectorSelection({
                         connection={connection}
                         onRemove={handleRemoveConnection}
                         onContextEdit={handleContextEdit}
+                        onEdit={handleEditConnection}
                       />
                     ))}
                   <button
                     type="button"
-                    onClick={openModal}
+                    onClick={() => { setEditingConnection(null); openModal(); }}
                     className="w-fit relative flex h-[40px] items-center border-none hover:bg-theme-bg-secondary rounded-lg"
                   >
                     <div className="flex w-full gap-x-2 items-center p-4">
@@ -151,11 +158,24 @@ export default function AgentSQLConnectorSelection({
       </div>
       <NewSQLConnection
         isOpen={isOpen}
-        closeModal={closeModal}
+        closeModal={() => { setEditingConnection(null); closeModal(); }}
         setHasChanges={setHasChanges}
-        onSubmit={(newDb) =>
-          setConnections((prev) => [...prev, { action: "add", ...newDb }])
-        }
+        existingConnection={editingConnection}
+        onSubmit={(newDb) => {
+          setHasChanges(true);
+          if (editingConnection) {
+            setConnections((prev) =>
+              prev.map((conn) =>
+                conn.database_id === editingConnection.database_id
+                  ? { ...conn, ...newDb, action: "add" }
+                  : conn
+              )
+            );
+          } else {
+            setConnections((prev) => [...prev, { action: "add", ...newDb }]);
+          }
+          setEditingConnection(null);
+        }}
       />
     </>
   );

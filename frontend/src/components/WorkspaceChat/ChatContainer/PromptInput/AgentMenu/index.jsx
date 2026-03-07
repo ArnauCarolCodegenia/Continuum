@@ -35,29 +35,29 @@ export default function AvailableAgentsButton({ showing, setShowAgents }) {
 }
 
 /**
- * A dedicated SQL Mode button that, when clicked, pre-fills the prompt
- * with an @agent command instructing the agent to query all connected databases.
+ * A dedicated SQL Mode toggle button. When active, the hidden prefix
+ * "@agent Search the connected SQL databases and answer using real data: "
+ * is automatically prepended to every message on submit without appearing in the input.
  */
-export function SQLModeButton({ sendCommand }) {
+export function SQLModeButton({ sqlMode, setSqlMode }) {
   const agentSessionActive = useIsAgentSessionActive();
   if (agentSessionActive) return null;
   return (
     <div
       id="sql-mode-btn"
       data-tooltip-id="tooltip-sql-mode-btn"
-      data-tooltip-content="SQL Mode – query your connected databases"
+      data-tooltip-content={sqlMode ? "SQL Mode ON \u2013 click to disable" : "SQL Mode \u2013 query databases & generate charts"}
       aria-label="SQL Mode"
-      onClick={() =>
-        sendCommand({
-          text: "@agent Search the connected SQL databases and answer using real data: ",
-          writeMode: "replace",
-        })
-      }
+      onClick={() => setSqlMode((prev) => !prev)}
       className="flex justify-center items-center cursor-pointer"
     >
       <Database
-        color="var(--theme-sidebar-footer-icon-fill)"
-        className="w-[22px] h-[22px] pointer-events-none text-theme-text-primary opacity-60 hover:opacity-100 light:opacity-100 light:hover:opacity-60"
+        color={sqlMode ? "#818cf8" : "var(--theme-sidebar-footer-icon-fill)"}
+        className={`w-[22px] h-[22px] pointer-events-none text-theme-text-primary transition-opacity ${
+          sqlMode
+            ? "opacity-100"
+            : "opacity-60 hover:opacity-100 light:opacity-100 light:hover:opacity-60"
+        }`}
       />
       <Tooltip
         id="tooltip-sql-mode-btn"

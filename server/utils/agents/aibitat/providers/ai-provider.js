@@ -361,7 +361,7 @@ class Provider {
         workspace.id
       );
     }
-    return basePrompt + "\n\nCRITICAL: If you generate a chart or a downloadable file using any of your tools, DO NOT output the raw HTML, markdown, or code blocks in your conversational response. ONLY provide a brief conversational confirmation.";
+    return basePrompt + "\n\nCRITICAL RULES:\n1. SQL WORKFLOW: When querying SQL databases, ALWAYS follow this order: first call sql-list-databases, then sql-list-tables, then sql-get-table-schema to learn the actual column names BEFORE running any sql-query. NEVER guess column names.\n2. CHART/FILE GENERATION: When the user asks for a chart, graph, visualization, report, or any downloadable file, you MUST call the save-file-to-browser tool IMMEDIATELY in the same response with the complete file content. Do NOT describe what you would generate and wait — generate and save it right away. The file will be automatically downloaded and opened in the user's browser.\n3. NO RAW CODE: If you generate a chart or a downloadable file using any of your tools, DO NOT output the raw HTML, markdown, or code blocks in your conversational response. ONLY provide a brief conversational confirmation.";
   }
 
   /**

@@ -157,29 +157,36 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
     const filename = data.content.filename || "unknown.txt";
     const b64Content = data.content.b64Content;
 
-    if (filename.toLowerCase().endsWith(".html")) {
-      try {
-        const base64Data = b64Content.split(",")[1] || b64Content;
-        const byteString = atob(base64Data);
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
-        for (let i = 0; i < byteString.length; i++) {
-          ia[i] = byteString.charCodeAt(i);
-        }
-        const blob = new Blob([ab], { type: "text/html" });
-        const blobUrl = URL.createObjectURL(blob);
-        const newWindow = window.open(blobUrl, "_blank");
-        
-        if (!newWindow) {
-          saveAs(b64Content, filename); // Fallback to download if popup blocked
-        }
-        return;
-      } catch (e) {
-        console.error("Failed to open HTML in new tab", e);
+    // Always decode the base64 content into a blob for reliable saving/opening
+    let blob;
+    try {
+      const base64Data = b64Content.split(",")[1] || b64Content;
+      const byteString = atob(base64Data);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
       }
+      const mimeType = filename.toLowerCase().endsWith(".html")
+        ? "text/html"
+        : "application/octet-stream";
+      blob = new Blob([ab], { type: mimeType });
+    } catch (e) {
+      console.error("Failed to decode file content", e);
+      saveAs(b64Content, filename);
+      return;
     }
 
-    saveAs(b64Content, filename);
+    if (filename.toLowerCase().endsWith(".html")) {
+      const blobUrl = URL.createObjectURL(blob);
+      const newWindow = window.open(blobUrl, "_blank");
+      if (!newWindow) {
+        // Popup blocked — fall back to download
+        saveAs(blob, filename);
+      }
+    } else {
+      saveAs(blob, filename);
+    }
     return;
   }
 

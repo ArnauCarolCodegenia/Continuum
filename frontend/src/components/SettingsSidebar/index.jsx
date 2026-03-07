@@ -138,7 +138,7 @@ export default function SettingsSidebar() {
         </Link>
         <div
           ref={sidebarRef}
-          className="transition-all duration-500 relative m-[16px] rounded-[20px] bg-theme-bg-sidebar border-[1.5px] border-[#d4d9e4] light:border-none min-w-[250px] p-[10px] h-[calc(100%-76px)] shadow-[0_1px_8px_rgba(0,0,0,0.04)]"
+          className="transition-all duration-500 relative m-[16px] rounded-[24px] bg-theme-bg-sidebar border border-white/[0.04] light:border-slate-200 min-w-[250px] p-[10px] h-[calc(100%-76px)] shadow-[0_4px_40px_rgba(0,0,0,0.2)] light:shadow-[0_1px_8px_rgba(0,0,0,0.06)]"
         >
           <div className="w-full h-full flex flex-col overflow-x-hidden items-between min-w-[235px]">
             <div className="text-theme-text-secondary text-sm font-medium uppercase mt-[4px] mb-0 ml-2">
@@ -151,7 +151,7 @@ export default function SettingsSidebar() {
                 </div>
               </div>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 pt-4 pb-3 rounded-b-[16px] bg-theme-bg-sidebar bg-opacity-80 backdrop-filter backdrop-blur-md z-10">
+            <div className="absolute bottom-0 left-0 right-0 pt-4 pb-3 rounded-b-[22px] bg-theme-bg-sidebar bg-opacity-90 backdrop-filter backdrop-blur-md z-10 border-t border-white/[0.04] light:border-slate-200">
               <Footer />
             </div>
           </div>

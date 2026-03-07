@@ -1,25 +1,20 @@
 CREATE TABLE facturas (
-    invoice_id UUID PRIMARY KEY,
-    hotel_name VARCHAR(255),
-    hotel_city VARCHAR(255),
-    country VARCHAR(255),
-    tax_id VARCHAR(50),
-    invoice_date DATE,
+    id_factura UUID PRIMARY KEY,
+    nombre_hotel VARCHAR(255),
+    ciudad VARCHAR(255),
+    pais VARCHAR(255),
+    fecha_factura DATE,
     check_in DATE,
     check_out DATE,
-    nights INT,
-    room_type VARCHAR(100),
-    room_cost NUMERIC(10,2),
-    breakfast_cost NUMERIC(10,2),
+    noches INT,
+    tipo_habitacion VARCHAR(100),
+    precio_habitacion NUMERIC(10,2),
     minibar_cost NUMERIC(10,2),
-    extras_total NUMERIC(10,2),
-    tax_rate NUMERIC(5,2),
-    tax_amount NUMERIC(10,2),
-    total_amount NUMERIC(10,2),
-    currency VARCHAR(10),
-    payment_method VARCHAR(50),
-    booking_channel VARCHAR(100),
-    guest_name VARCHAR(255)
+    precio_total NUMERIC(10,2),
+    moneda VARCHAR(10),
+    forma_pago VARCHAR(50),
+    canal_reserva VARCHAR(100),
+    nombre_usuario VARCHAR(255)
 );
 
 COPY facturas FROM '/docker-entrypoint-initdb.d/facturas_hoteles_1000.csv' DELIMITER ',' CSV HEADER;

@@ -62,7 +62,7 @@ export default function ThreadItem({
         className="h-full"
       />
       <div
-        className={`flex w-full items-center justify-between pr-2 group relative ${isActive ? "border border-solid border-transparent light:border-blue-400" : "hover:bg-white/15"} rounded-[4px]`}
+        className={`flex w-full items-center justify-between pr-2 group relative ${isActive ? "border border-solid border-transparent light:border-indigo-400" : "hover:bg-white/[0.06]"} rounded-[4px]`}
         style={isActive ? { backgroundColor: "#ffffff" } : undefined}
       >
         {thread.deleted ? (

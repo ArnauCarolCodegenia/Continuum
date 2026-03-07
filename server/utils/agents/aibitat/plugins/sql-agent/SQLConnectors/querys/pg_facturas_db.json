@@ -1,0 +1,45 @@
+data = {
+    "dataset": "pg_facturas_db",
+    "qa": [
+        {
+            "pregunta": "¿Cuál es el importe total facturado por cada hotel?",
+            "query": "SELECT nombre_hotel, SUM(precio_total) AS facturacion_total FROM facturas GROUP BY nombre_hotel ORDER BY facturacion_total DESC;"
+        },
+        {
+            "pregunta": "¿Qué ciudad genera mayor facturación total?",
+            "query": "SELECT ciudad, SUM(precio_total) AS facturacion_total FROM facturas GROUP BY ciudad ORDER BY facturacion_total DESC LIMIT 1;"
+        },
+        {
+            "pregunta": "¿Cuál es el gasto medio por estancia por cliente?",
+            "query": "SELECT nombre_usuario, AVG(precio_total) AS gasto_medio_estancia FROM facturas GROUP BY nombre_usuario ORDER BY gasto_medio_estancia DESC;"
+        },
+        {
+            "pregunta": "¿Qué porcentaje de la facturación total proviene del minibar?",
+            "query": "SELECT (SUM(minibar_cost) / SUM(precio_total)) * 100 AS porcentaje_minibar FROM facturas;"
+        },
+        {
+            "pregunta": "¿Qué canal de reserva genera más ingresos?",
+            "query": "SELECT canal_reserva, SUM(precio_total) AS ingresos_totales FROM facturas GROUP BY canal_reserva ORDER BY ingresos_totales DESC LIMIT 1;"
+        },
+        {
+            "pregunta": "¿Cuál es el método de pago más utilizado por los clientes?",
+            "query": "SELECT forma_pago, COUNT(*) AS numero_transacciones FROM facturas GROUP BY forma_pago ORDER BY numero_transacciones DESC LIMIT 1;"
+        },
+        {
+            "pregunta": "¿Qué tipo de habitación genera mayor facturación total?",
+            "query": "SELECT tipo_habitacion, SUM(precio_total) AS facturacion_total FROM facturas GROUP BY tipo_habitacion ORDER BY facturacion_total DESC LIMIT 1;"
+        },
+        {
+            "pregunta": "¿Cuál es la duración media de las estancias (noches)?",
+            "query": "SELECT AVG(noches) AS duracion_media_estancia FROM facturas;"
+        },
+        {
+            "pregunta": "¿Qué hotel tiene el mayor ingreso medio por factura?",
+            "query": "SELECT nombre_hotel, AVG(precio_total) AS ingreso_medio FROM facturas GROUP BY nombre_hotel ORDER BY ingreso_medio DESC LIMIT 1;"
+        },
+        {
+            "pregunta": "¿Cómo varía la facturación mensual a lo largo del tiempo?",
+            "query": "SELECT DATE_TRUNC('month', fecha_factura) AS mes, SUM(precio_total) AS facturacion_mensual FROM facturas GROUP BY mes ORDER BY mes;"
+        }
+    ]
+}

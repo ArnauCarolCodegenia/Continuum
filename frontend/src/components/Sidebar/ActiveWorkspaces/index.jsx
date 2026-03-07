@@ -114,7 +114,7 @@ export default function ActiveWorkspaces() {
                             flex flex-grow w-[75%] gap-x-2 py-[8px] pl-[8px] pr-[8px] rounded-lg text-white justify-start items-center
                             bg-theme-sidebar-item-default
                             hover:bg-white/8 hover:font-bold
-                            ${isActive ? "bg-blue-600/15 border-l-2 border-l-blue-500 font-bold" : "border-l-2 border-l-transparent"}
+                            ${isActive ? "bg-indigo-500/10 border-l-2 border-l-indigo-400 font-bold" : "border-l-2 border-l-transparent"}
                           `}
                         >
                           <div className="flex flex-row justify-between w-full items-center">

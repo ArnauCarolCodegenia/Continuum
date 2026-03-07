@@ -16,18 +16,26 @@ module.exports.SqlAgentGetTableSchema = {
             "Gets the table schema in SQL for a given `table` and `database_id`",
           examples: [
             {
-              prompt: "What does the customers table in access-logs look like?",
+              prompt: "¿Cómo es la tabla de facturas en mi base de datos del espacio de trabajo?",
               call: JSON.stringify({
-                database_id: "access-logs",
-                table_name: "customers",
+                database_id: "pg_facturas_db",
+                table_name: "facturas",
               }),
             },
             {
               prompt:
-                "Get me the full name of a company in records-main, the table should be call comps",
+                "Obtén el esquema de la tabla de usuarios en la base de datos de producción",
               call: JSON.stringify({
-                database_id: "records-main",
-                table_name: "comps",
+                database_id: "production",
+                table_name: "usuarios",
+              }),
+            },
+            {
+              prompt:
+                "Muestra las columnas de la tabla clientes",
+              call: JSON.stringify({
+                database_id: "pg_facturas_db",
+                table_name: "clientes",
               }),
             },
           ],

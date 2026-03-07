@@ -67,25 +67,25 @@ export default function MenuOption({
           rounded-[8px]
           ${
             isActive
-              ? "bg-blue-600/15 border-l-2 border-l-blue-500 font-medium"
+              ? "bg-indigo-500/10 border-l-2 border-l-indigo-400 font-medium"
               : isChild
-              ? "hover:bg-white/5"
-              : "hover:bg-white/6"
+              ? "hover:bg-white/[0.03] light:hover:bg-black/[0.03]"
+              : "hover:bg-white/[0.04] light:hover:bg-black/[0.04]"
           }
         `}
       >
         <Link
           to={href}
           className={`flex flex-grow items-center px-[12px] h-[32px] font-medium ${
-            isChild ? "hover:text-white" : "text-white light:text-black"
+            isChild ? "hover:text-white light:hover:text-black" : "text-white light:text-black"
           }`}
           onClick={hasChildren ? handleClick : undefined}
         >
           {!isChild && icon ? (
             <span className={`flex items-center justify-center w-6 h-6 rounded-md mr-1 ${
               isActive
-                ? "text-blue-300"
-                : "text-blue-400/70"
+                ? "text-indigo-300 light:text-indigo-600"
+                : "text-slate-400 light:text-slate-500"
             }`}>
               {icon}
             </span>
@@ -95,17 +95,17 @@ export default function MenuOption({
               isChild ? "text-xs" : "text-sm"
             } leading-loose whitespace-nowrap overflow-hidden ml-1 ${
               isActive
-                ? "text-blue-200 font-semibold"
+                ? "text-indigo-200 light:text-indigo-700 font-semibold"
                 : isChild
-                ? "text-white/70"
-                : "text-white/90"
+                ? "text-white/50 light:text-black/50"
+                : "text-white/70 light:text-black/70"
             } ${!icon && "pl-5"}`}
           >
             {btnText}
           </p>
         </Link>
         {hasChildren && (
-          <button onClick={handleClick} className="p-2 text-white/60 hover:text-white">
+          <button onClick={handleClick} className="p-2 text-white/60 hover:text-white light:text-black/60 light:hover:text-black">
             <CaretRight
               size={14}
               weight="bold"
@@ -117,7 +117,7 @@ export default function MenuOption({
         )}
       </div>
       {isExpanded && hasChildren && (
-        <div className="mt-1 ml-3 pl-2 border-l border-blue-500/25 rounded-r-lg w-full">
+        <div className="mt-1 ml-3 pl-2 border-l border-indigo-500/15 rounded-r-lg w-full">
           {childOptions.map((childOption, index) => (
             <MenuOption
               key={index}

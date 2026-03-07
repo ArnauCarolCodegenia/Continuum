@@ -1,7 +1,7 @@
 import PostgreSQLLogo from "./icons/postgresql.png";
 import MySQLLogo from "./icons/mysql.png";
 import MSSQLLogo from "./icons/mssql.png";
-import { X, Info } from "@phosphor-icons/react";
+import { X, Info, PencilSimple } from "@phosphor-icons/react";
 import { useState } from "react";
 
 export const DB_LOGOS = {
@@ -10,7 +10,7 @@ export const DB_LOGOS = {
   "sql-server": MSSQLLogo,
 };
 
-export default function DBConnection({ connection, onRemove, onContextEdit }) {
+export default function DBConnection({ connection, onRemove, onContextEdit, onEdit }) {
   const { database_id, engine, context } = connection;
   const [showContext, setShowContext] = useState(false);
 
@@ -49,6 +49,14 @@ export default function DBConnection({ connection, onRemove, onContextEdit }) {
               }`}
             >
               <Info size={20} />
+            </button>
+            <button
+              type="button"
+              onClick={() => onEdit(connection)}
+              title="Edit connection settings"
+              className="border-none text-white/40 hover:text-white transition-colors"
+            >
+              <PencilSimple size={20} />
             </button>
             <button
               type="button"

@@ -29,6 +29,7 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
   const { threadSlug = null } = useParams();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [sqlMode, setSqlMode] = useState(false);
   const [loadingResponse, setLoadingResponse] = useState(false);
   const [chatHistory, setChatHistory] = useState(knownHistory);
   const [socketId, setSocketId] = useState(null);
@@ -62,9 +63,12 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
     );
   }
 
+  const SQL_PREFIX = "@agent Search the connected SQL databases and answer using real data. If the user explicitly asks for a chart, graph, or visualization, query the data from SQL first and then generate it using the save-file-to-browser tool with Chart.js: ";
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!message || message === "") return false;
+    const finalMessage = sqlMode ? SQL_PREFIX + message : message;
     const prevChatHistory = [
       ...chatHistory,
       {
@@ -76,7 +80,7 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
         content: "",
         role: "assistant",
         pending: true,
-        userMessage: message,
+        userMessage: finalMessage,
         animate: true,
       },
     ];
@@ -305,13 +309,13 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
   return (
     <div
       style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-      className="transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[20px] bg-theme-bg-secondary md:shadow-[0_2px_24px_rgba(0,0,0,0.06)] md:border md:border-[#e0e4ed] w-full h-full overflow-y-scroll no-scroll z-[2]"
+      className="transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[24px] bg-theme-bg-secondary md:shadow-[0_4px_40px_rgba(0,0,0,0.2)] md:border md:border-white/[0.04] w-full h-full overflow-y-scroll no-scroll z-[2]"
     >
       {!isMobile && (
         <button
           type="button"
           onClick={() => navigate(paths.home())}
-          className="hidden md:flex items-center gap-x-2 absolute top-4 right-4 z-10 px-3 py-2 rounded-full bg-theme-bg-sidebar border border-white/10 text-theme-text-primary hover:bg-theme-action-menu-bg transition-colors duration-300"
+          className="hidden md:flex items-center gap-x-2 absolute top-4 right-4 z-10 px-3 py-2 rounded-full bg-white/[0.04] border border-white/[0.06] text-theme-text-secondary hover:text-theme-text-primary hover:bg-white/[0.08] transition-all duration-300 backdrop-blur-sm"
         >
           <ArrowLeft className="w-4 h-4" weight="bold" />
           <span className="text-sm font-medium">Volver al inicio</span>
@@ -335,6 +339,8 @@ export default function ChatContainer({ workspace, knownHistory = [] }) {
           isStreaming={loadingResponse}
           sendCommand={sendCommand}
           attachments={files}
+          sqlMode={sqlMode}
+          setSqlMode={setSqlMode}
         />
       </DnDFileUploaderWrapper>
       <ChatTooltips />

@@ -112,30 +112,30 @@ function FeatureCard({
   isNew,
 }) {
   return (
-    <div className="border border-white/10 bg-white/3 backdrop-blur-sm rounded-xl py-5 px-6 flex flex-col justify-between gap-y-4 shadow-md shadow-black/10 card-glow hover:-translate-y-0.5 transition-transform duration-300">
+    <div className="border border-white/[0.04] light:border-slate-200 bg-white/[0.02] light:bg-white rounded-xl py-5 px-6 flex flex-col justify-between gap-y-4 hover:-translate-y-0.5 transition-all duration-300 light:shadow-sm">
       <div className="flex flex-col gap-y-2">
-        <h2 className="text-black font-bold text-base flex items-center gap-x-2 tracking-wide">
+        <h2 className="text-white light:text-black font-bold text-base flex items-center gap-x-2 tracking-wide">
           {title}
         </h2>
-        <p className="text-black/85 text-sm leading-relaxed">{description}</p>
+        <p className="text-white/70 light:text-black/85 text-sm leading-relaxed">{description}</p>
       </div>
       <div className="flex flex-col gap-y-[10px]">
         <button
           onClick={onPrimaryAction}
-          className="w-full h-[38px] bg-gradient-to-r from-blue-600/80 to-indigo-600/80 hover:from-blue-500/90 hover:to-indigo-500/90 border-none text-white rounded-lg text-sm font-semibold flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-blue-500/20 hover:shadow-md"
+          className="w-full h-[38px] bg-indigo-500/80 hover:bg-indigo-400/80 border-none text-white rounded-lg text-sm font-semibold flex items-center justify-center transition-all duration-300"
         >
           {primaryAction}
         </button>
         {secondaryAction && (
           <div className="relative w-full">
             {isNew && (
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 px-2.5 py-0.5 font-bold rounded-full text-[10px] text-teal-900 bg-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.6)] uppercase tracking-wider">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 px-2.5 py-0.5 font-bold rounded-full text-[10px] text-emerald-900 bg-emerald-400 uppercase tracking-wider">
                 New
               </div>
             )}
             <button
               onClick={onSecondaryAction}
-              className="w-full h-[38px] bg-slate-800/80 hover:bg-slate-700/80 border border-slate-600/50 rounded-lg text-white text-sm font-medium flex items-center justify-center transition-all duration-200"
+              className="w-full h-[38px] bg-white/[0.04] hover:bg-white/[0.08] light:bg-slate-100 light:hover:bg-slate-200 border border-white/[0.06] light:border-slate-200 rounded-lg text-white light:text-black text-sm font-medium flex items-center justify-center transition-all duration-200"
             >
               {secondaryAction}
             </button>

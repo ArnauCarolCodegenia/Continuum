@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import ModalWrapper from "@/components/ModalWrapper";
 import { WarningOctagon, X } from "@phosphor-icons/react";
@@ -29,6 +29,22 @@ function assembleConnectionString({
   }
 }
 
+function parseConnectionString(connectionString) {
+  try {
+    const url = new URL(connectionString);
+    return {
+      username: decodeURIComponent(url.username) || null,
+      password: decodeURIComponent(url.password) || null,
+      host: url.hostname || null,
+      port: url.port || null,
+      database: url.pathname.replace(/^\//, "") || null,
+      encrypt: url.searchParams.get("encrypt") === "true",
+    };
+  } catch {
+    return null;
+  }
+}
+
 const DEFAULT_ENGINE = "postgresql";
 const DEFAULT_CONFIG = {
   username: null,
@@ -45,10 +61,24 @@ export default function NewSQLConnection({
   closeModal,
   onSubmit,
   setHasChanges,
+  existingConnection = null,
 }) {
-  const [engine, setEngine] = useState(DEFAULT_ENGINE);
-  const [config, setConfig] = useState(DEFAULT_CONFIG);
+  const isEditing = !!existingConnection;
+
+  const initialConfig = existingConnection
+    ? parseConnectionString(existingConnection.connectionString) || DEFAULT_CONFIG
+    : DEFAULT_CONFIG;
+  const initialEngine = existingConnection?.engine || DEFAULT_ENGINE;
+
+  const [engine, setEngine] = useState(initialEngine);
+  const [config, setConfig] = useState(initialConfig);
   const [isValidating, setIsValidating] = useState(false);
+
+  useEffect(() => {
+    setEngine(initialEngine);
+    setConfig(initialConfig);
+  }, [isOpen, existingConnection]);
+
   if (!isOpen) return null;
 
   function handleClose() {
@@ -122,7 +152,7 @@ export default function NewSQLConnection({
           <div className="relative p-6 border-b rounded-t border-theme-modal-border">
             <div className="w-full flex gap-x-2 items-center">
               <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-                New SQL Connection
+                {isEditing ? "Edit SQL Connection" : "New SQL Connection"}
               </h3>
             </div>
             <button
@@ -185,7 +215,10 @@ export default function NewSQLConnection({
                   <input
                     type="text"
                     name="name"
-                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    key={`name-${existingConnection?.database_id || "new"}`}
+                    defaultValue={existingConnection?.database_id || ""}
+                    readOnly={isEditing}
+                    className={`border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 ${isEditing ? "opacity-60 cursor-not-allowed" : ""}`}
                     placeholder="a unique name to identify this SQL connection"
                     required={true}
                     autoComplete="off"
@@ -201,6 +234,8 @@ export default function NewSQLConnection({
                     <input
                       type="text"
                       name="username"
+                      key={`username-${existingConnection?.database_id || "new"}`}
+                      defaultValue={config.username || ""}
                       className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                       placeholder="root"
                       required={true}
@@ -215,6 +250,8 @@ export default function NewSQLConnection({
                     <input
                       type="text"
                       name="password"
+                      key={`password-${existingConnection?.database_id || "new"}`}
+                      defaultValue={config.password || ""}
                       className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                       placeholder="password123"
                       required={true}
@@ -232,6 +269,8 @@ export default function NewSQLConnection({
                     <input
                       type="text"
                       name="host"
+                      key={`host-${existingConnection?.database_id || "new"}`}
+                      defaultValue={config.host || ""}
                       className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                       placeholder="the hostname or endpoint for your database"
                       required={true}
@@ -246,6 +285,8 @@ export default function NewSQLConnection({
                     <input
                       type="text"
                       name="port"
+                      key={`port-${existingConnection?.database_id || "new"}`}
+                      defaultValue={config.port || ""}
                       className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                       placeholder="3306"
                       required={false}
@@ -262,6 +303,8 @@ export default function NewSQLConnection({
                   <input
                     type="text"
                     name="database"
+                    key={`database-${existingConnection?.database_id || "new"}`}
+                    defaultValue={config.database || ""}
                     className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     placeholder="the database the agent will interact with"
                     required={true}
@@ -324,7 +367,7 @@ export default function NewSQLConnection({
                 disabled={isValidating}
                 className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm disabled:opacity-50"
               >
-                {isValidating ? "Validating..." : "Save connection"}
+                {isValidating ? "Validating..." : isEditing ? "Update connection" : "Save connection"}
               </button>
             </div>
           </form>

@@ -4,7 +4,7 @@ import SlashCommandsButton, {
   useSlashCommands,
 } from "./SlashCommands";
 import debounce from "lodash.debounce";
-import { PaperPlaneRight } from "@phosphor-icons/react";
+import { PaperPlaneRight, Database } from "@phosphor-icons/react";
 import StopGenerationButton from "./StopGenerationButton";
 import AvailableAgentsButton, {
   AvailableAgents,
@@ -37,6 +37,8 @@ export default function PromptInput({
   isStreaming,
   sendCommand,
   attachments = [],
+  sqlMode = false,
+  setSqlMode = () => {},
 }) {
   const { t } = useTranslation();
   const { isDisabled } = useIsDisabled();
@@ -270,8 +272,16 @@ export default function PromptInput({
         className="flex flex-col gap-y-1 rounded-t-lg md:w-3/4 w-full mx-auto max-w-xl items-center"
       >
         <div className="flex items-center rounded-lg md:mb-4 md:w-full">
-          <div className="w-[95vw] md:w-[635px] bg-theme-bg-chat-input light:bg-white border border-[#d4d9e4] shadow-[0_2px_12px_rgba(0,0,0,0.06)] rounded-3xl pwa:rounded-3xl flex flex-col px-2 overflow-hidden">
+          <div className="w-[95vw] md:w-[635px] bg-theme-bg-chat-input light:bg-white border border-white/[0.06] shadow-[0_4px_24px_rgba(0,0,0,0.15)] rounded-3xl pwa:rounded-3xl flex flex-col px-2 overflow-hidden">
             <AttachmentManager attachments={attachments} />
+            {sqlMode && (
+              <div className="flex items-center gap-x-1.5 mx-3 mt-2 mb-0.5">
+                <span className="inline-flex items-center gap-x-1 text-xs font-medium text-indigo-400 bg-indigo-400/10 px-2 py-0.5 rounded-full">
+                  <Database size={12} weight="bold" />
+                  SQL Mode
+                </span>
+              </div>
+            )}
             <div className="flex items-center border-b border-theme-chat-input-border mx-3">
               <textarea
                 id={PROMPT_INPUT_ID}
@@ -301,7 +311,7 @@ export default function PromptInput({
                     ref={formRef}
                     type="submit"
                     disabled={isDisabled}
-                    className="border-none outline-none focus:outline-none focus:ring-0 focus-visible:outline-none active:outline-none inline-flex justify-center items-center rounded-full cursor-pointer w-[32px] h-[32px] ml-3 bg-[#4f63d2] hover:bg-[#3f51b8] disabled:bg-[#c5cbe0] disabled:cursor-not-allowed transition-all duration-200 shadow-sm group"
+                    className="border-none outline-none focus:outline-none focus:ring-0 focus-visible:outline-none active:outline-none inline-flex justify-center items-center rounded-full cursor-pointer w-[32px] h-[32px] ml-3 bg-[#6366f1] hover:bg-[#4f46e5] disabled:bg-white/10 disabled:cursor-not-allowed transition-all duration-200 shadow-sm group"
                     data-tooltip-id="send-prompt"
                     data-tooltip-content={
                       isDisabled
@@ -327,7 +337,7 @@ export default function PromptInput({
             </div>
             <div className="flex justify-between py-3.5 mx-3 mb-1">
               <div className="flex gap-x-2">
-                <SQLModeButton sendCommand={sendCommand} />
+                <SQLModeButton sqlMode={sqlMode} setSqlMode={setSqlMode} />
               </div>
               <div className="flex gap-x-2">
                 <SpeechToText sendCommand={sendCommand} />

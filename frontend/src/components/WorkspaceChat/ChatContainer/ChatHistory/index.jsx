@@ -293,6 +293,10 @@ function WorkspaceChatSuggestions({ suggestions = [], sendSuggestion }) {
  * @param {Function} param0.getMessageAlignment - The function to get the alignment of the message (returns class).
  * @returns {Array} The compiled history of messages.
  */
+// Matches any hidden SQL-mode prefix injected by the DB toggle button.
+// Uses a regex so we don't need to update this every time the prefix wording changes.
+const SQL_AGENT_PREFIX_RE = /^@agent\s+Search the connected SQL databases[^:]*:\s*/;
+
 function buildMessages({
   history,
   workspace,
@@ -332,10 +336,15 @@ function buildMessages({
         />
       );
     } else {
+      // Strip the hidden SQL agent prefix from user messages so it never shows in the chat
+      const displayContent =
+        props.role === "user" && SQL_AGENT_PREFIX_RE.test(props.content)
+          ? props.content.replace(SQL_AGENT_PREFIX_RE, "")
+          : props.content;
       acc.push(
         <HistoricalMessage
           key={index}
-          message={props.content}
+          message={displayContent}
           role={props.role}
           workspace={workspace}
           sources={props.sources}
